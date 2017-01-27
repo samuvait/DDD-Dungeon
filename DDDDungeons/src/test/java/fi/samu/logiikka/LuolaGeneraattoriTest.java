@@ -5,6 +5,7 @@
  */
 package fi.samu.logiikka;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,4 +43,138 @@ public class LuolaGeneraattoriTest {
     //
     // @Test
     // public void hello() {}
+    @Test
+    public void luolanLuominenNegatiivisella() {
+        LuolaGeneraattori lg = new LuolaGeneraattori(-1, 3, 8);
+        assertEquals(25, lg.getKoko());
+    }
+    @Test
+    public void luolanLuominenNollalla() {
+        LuolaGeneraattori lg = new LuolaGeneraattori(0, 3, 8);
+        assertEquals(25, lg.getKoko());
+    }
+    
+    @Test
+    public void luolanLuominenOikeallaLuvulla() {
+        LuolaGeneraattori lg = new LuolaGeneraattori(100, 3, 8);
+        assertEquals(100, lg.getKoko());
+    }
+    
+    @Test
+    public void alustettuOikeinTyhjaksi() {
+        int luolanKoko = 50;
+        boolean kaviLapiOikein = true;
+        LuolaGeneraattori lg = new LuolaGeneraattori(luolanKoko, 3, 8);
+        int[][] kartta = lg.getKartta();
+        for (int i = 0; i < luolanKoko; i++) {
+            for (int j = 0; j < luolanKoko; j++) {
+                if (kartta[i][j] != 0) {
+                    kaviLapiOikein = false;
+                }
+            }
+        }
+        assertTrue(kaviLapiOikein);
+    }
+    
+    @Test
+    public void alustettuOikeinTyhjaksiNollalla() {
+        int luolanKoko = 25;
+        boolean kaviLapiOikein = true;
+        LuolaGeneraattori lg = new LuolaGeneraattori(0, 3, 8);
+        int[][] kartta = lg.getKartta();
+        for (int i = 0; i < luolanKoko; i++) {
+            for (int j = 0; j < luolanKoko; j++) {
+                if (kartta[i][j] != 0) {
+                    kaviLapiOikein = false;
+                }
+            }
+        }
+        assertTrue(kaviLapiOikein);
+    }
+    
+    @Test
+    public void alustettuOikeinTyhjaksiNegatiivisella() {
+        int luolanKoko = 25;
+        boolean kaviLapiOikein = true;
+        LuolaGeneraattori lg = new LuolaGeneraattori(-1, 3, 8);
+        int[][] kartta = lg.getKartta();
+        for (int i = 0; i < luolanKoko; i++) {
+            for (int j = 0; j < luolanKoko; j++) {
+                if (kartta[i][j] != 0) {
+                    kaviLapiOikein = false;
+                    break;
+                }
+            }
+            if (!kaviLapiOikein) {
+                break;
+            }
+        }
+        assertTrue(kaviLapiOikein);
+    }
+    
+    
+    @Test
+    public void luotuHuoneetOikeanKokoisiksi() {
+        boolean oikeanKokoisetHuoneet = true;
+        LuolaGeneraattori lg = new LuolaGeneraattori(25, 4, 7);
+        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        while (!huoneLista.isEmpty()) {
+            int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
+            if (huoneenKoko < 4 || huoneenKoko > 7) {
+                oikeanKokoisetHuoneet = false;
+                break;
+            }
+        }
+        assertTrue(oikeanKokoisetHuoneet);
+    }
+    
+    @Test
+    public void luotuHuoneetOikeinLiianIsoillaArvoilla() {
+        boolean oikeanKokoisetHuoneet = true;
+        int minimi = 26;
+        int maksimi = 50;
+        LuolaGeneraattori lg = new LuolaGeneraattori(25, minimi, maksimi);
+        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        while (!huoneLista.isEmpty()) {
+            int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
+            if (huoneenKoko < 3 || huoneenKoko > 8) {
+                oikeanKokoisetHuoneet = false;
+                break;
+            }
+        }
+        assertTrue(oikeanKokoisetHuoneet);
+    }
+    
+    @Test
+    public void luotuHuoneetOikeinLiianPienillaArvoilla() {
+        boolean oikeanKokoisetHuoneet = true;
+        int minimi = 0;
+        int maksimi = 2;
+        LuolaGeneraattori lg = new LuolaGeneraattori(25, minimi, maksimi);
+        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        while (!huoneLista.isEmpty()) {
+            int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
+            if (huoneenKoko < 3 || huoneenKoko > 8) {
+                oikeanKokoisetHuoneet = false;
+                break;
+            }
+        }
+        assertTrue(oikeanKokoisetHuoneet);
+    }
+    
+    @Test
+    public void huoneetPienempiaKuinKartta() {
+        boolean huoneetPienempia = true;
+        LuolaGeneraattori lg = new LuolaGeneraattori(25, 3, 8);
+        int summa = 0;
+        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        while (!huoneLista.isEmpty()) {
+            int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
+            summa += huoneenKoko * huoneenKoko;
+        }
+        if (summa >= lg.getKoko() * lg.getKoko()) {
+            huoneetPienempia = false;
+        }
+        assertTrue(huoneetPienempia);
+    }
 }

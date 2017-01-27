@@ -15,11 +15,27 @@ public class LuolaGeneraattori {
     private int koko;
     private ArrayList<Integer> huoneLista;
     private int tayttoAste;
+    private int huoneenLeveysMinimi;
+    private int huoneenLeveysMaksimi;
     
-    public LuolaGeneraattori() {
-        this.koko = 25;  // Kartan sivun pituus, vaatii kokeilua oikean löytämiseksi
-        this.tayttoAste = (koko * koko) / 2; //Täyttöasteen määritys, vaikuttaa siihen paljonko kartan pinta-alasta täytetään huoneilla.
-        alustaKartta();
+    public LuolaGeneraattori(int koko, int huoneenLeveysMinimi, int huoneenLeveysMaksimi) {
+        if (koko < 25) {
+            this.koko = 25;  // kartan minimikoko tällä hetkellä 25
+        } else {
+            this.koko = koko;  // Kartan sivun pituus, vaatii kokeilua oikean löytämiseksi
+        }
+        if (huoneenLeveysMinimi < 3) {
+            this.huoneenLeveysMinimi = 3;  // kartan minimikoko tällä hetkellä 25
+        } else {
+            this.huoneenLeveysMinimi = huoneenLeveysMinimi;  // Kartan sivun pituus, vaatii kokeilua oikean löytämiseksi
+        }
+        if (huoneenLeveysMaksimi > 8) {
+            this.huoneenLeveysMaksimi = 8;  // kartan minimikoko tällä hetkellä 25
+        } else {
+            this.huoneenLeveysMaksimi = huoneenLeveysMaksimi;  // Kartan sivun pituus, vaatii kokeilua oikean löytämiseksi
+        }
+        this.tayttoAste = (this.koko * this.koko) / 2; //Täyttöasteen määritys, vaikuttaa siihen paljonko kartan pinta-alasta täytetään huoneilla.
+        alustaKartta(this.koko);
         luoHuoneet();
         sijoitaHuoneet();
     }
@@ -37,7 +53,7 @@ public class LuolaGeneraattori {
         }
     }
     
-    public void alustaKartta() {
+    public void alustaKartta(int koko) {
         kartta = new int[koko][koko];
         for (int i = 0; i < koko; i++) {
             for (int j = 0; j < koko; j++) {
@@ -60,11 +76,27 @@ public class LuolaGeneraattori {
     public void sijoitaHuoneet() {
         while (!huoneLista.isEmpty()) {
             int sijoitettavaHuone = huoneLista.remove(huoneLista.size() - 1);
-            
         }
     }
     
     public void luoKaytavat() {
         
     }
+    
+    public int getKoko() {
+        if (this.koko > 0) {
+            return this.koko;
+        } else {
+            return 0;
+        }
+    }
+    
+    public int[][] getKartta() {
+        return this.kartta;
+    }
+    
+    public ArrayList<Integer> getHuoneLista() {
+        return this.huoneLista;
+    }
+    
 }
