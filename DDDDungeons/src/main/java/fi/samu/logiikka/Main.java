@@ -8,8 +8,8 @@ package fi.samu.logiikka;
 public class Main {
     
     public static void main(String[] args) {
-        LuolaGeneraattori lg = new LuolaGeneraattori(25, 3, 8);
-        //lg.tulostaKartta();
+        LuolaGeneraattori lg = new LuolaGeneraattori();
+        lg.tulostaKartta();
     }
     
 }

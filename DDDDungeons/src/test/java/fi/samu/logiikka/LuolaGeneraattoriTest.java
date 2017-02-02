@@ -68,7 +68,7 @@ public class LuolaGeneraattoriTest {
         int[][] kartta = lg.getKartta();
         for (int i = 0; i < luolanKoko; i++) {
             for (int j = 0; j < luolanKoko; j++) {
-                if (kartta[i][j] != 0) {
+                if (!(kartta[i][j] == 0 || kartta[i][j] == 1)) {
                     kaviLapiOikein = false;
                 }
             }
@@ -84,7 +84,7 @@ public class LuolaGeneraattoriTest {
         int[][] kartta = lg.getKartta();
         for (int i = 0; i < luolanKoko; i++) {
             for (int j = 0; j < luolanKoko; j++) {
-                if (kartta[i][j] != 0) {
+                if (!(kartta[i][j] == 0 || kartta[i][j] == 1)) {
                     kaviLapiOikein = false;
                 }
             }
@@ -100,7 +100,7 @@ public class LuolaGeneraattoriTest {
         int[][] kartta = lg.getKartta();
         for (int i = 0; i < luolanKoko; i++) {
             for (int j = 0; j < luolanKoko; j++) {
-                if (kartta[i][j] != 0) {
+                if (!(kartta[i][j] == 0 || kartta[i][j] == 1)) {
                     kaviLapiOikein = false;
                     break;
                 }
@@ -117,7 +117,7 @@ public class LuolaGeneraattoriTest {
     public void luotuHuoneetOikeanKokoisiksi() {
         boolean oikeanKokoisetHuoneet = true;
         LuolaGeneraattori lg = new LuolaGeneraattori(25, 4, 7);
-        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
             int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
             if (huoneenKoko < 4 || huoneenKoko > 7) {
@@ -134,7 +134,7 @@ public class LuolaGeneraattoriTest {
         int minimi = 26;
         int maksimi = 50;
         LuolaGeneraattori lg = new LuolaGeneraattori(25, minimi, maksimi);
-        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
             int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
             if (huoneenKoko < 3 || huoneenKoko > 8) {
@@ -151,7 +151,7 @@ public class LuolaGeneraattoriTest {
         int minimi = 0;
         int maksimi = 2;
         LuolaGeneraattori lg = new LuolaGeneraattori(25, minimi, maksimi);
-        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
             int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
             if (huoneenKoko < 3 || huoneenKoko > 8) {
@@ -165,9 +165,9 @@ public class LuolaGeneraattoriTest {
     @Test
     public void huoneetPienempiaKuinKartta() {
         boolean huoneetPienempia = true;
-        LuolaGeneraattori lg = new LuolaGeneraattori(25, 3, 8);
+        LuolaGeneraattori lg = new LuolaGeneraattori();
         int summa = 0;
-        ArrayList<Integer> huoneLista = lg.getHuoneLista();
+        ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
             int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
             summa += huoneenKoko * huoneenKoko;
