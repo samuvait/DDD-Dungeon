@@ -173,4 +173,12 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(huoneetPienempia);
     }
+    
+    @Test
+    public void oikeaMaaraHuoneita() {
+        LuolaGeneraattori lg = new LuolaGeneraattori();
+        int huoneidenMaara = lg.getHuoneidenMaara();
+        int kaytavienMaara = lg.getKaytavienMaara();
+        assertEquals(huoneidenMaara, kaytavienMaara + 1);
+    }
 }

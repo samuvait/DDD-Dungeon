@@ -12,24 +12,24 @@ public class Huone {
     private int huoneenLeveys;
     private int huoneenPituus;
     
-    public Huone(int x, int y, int huoneenLeveys) {
-        luoHuone(x, y, huoneenLeveys, huoneenLeveys);
+    public Huone(int y, int x, int huoneenLeveys) {
+        luoHuone(y, x, huoneenLeveys, huoneenLeveys);
     }
     
-    public Huone(int x, int y, int huoneenLeveys, int huoneenPituus) {
-        luoHuone(x, y, huoneenLeveys, huoneenPituus);
+    public Huone(int y, int x, int huoneenLeveys, int huoneenPituus) {
+        luoHuone(y, x, huoneenLeveys, huoneenPituus);
     }
     
-    public void luoHuone(int x, int y, int huoneenLeveys, int huoneenPituus) {
+    public void luoHuone(int y, int x, int huoneenLeveys, int huoneenPituus) {
         if (y < 0) {
             this.y = 0;
         } else {
-            this.y = x;
+            this.y = y;
         }
         if (x < 0) {
             this.x = 0;
         } else {
-            this.x = y;
+            this.x = x;
         }
         if (huoneenLeveys < 0) {
             this.huoneenLeveys = 3;
