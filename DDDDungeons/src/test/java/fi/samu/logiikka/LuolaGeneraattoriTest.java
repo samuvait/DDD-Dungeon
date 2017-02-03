@@ -175,10 +175,13 @@ public class LuolaGeneraattoriTest {
     }
     
     @Test
-    public void oikeaMaaraHuoneita() {
+    public void oikeaMaaraHuoneitaJaKaytavia() {
         LuolaGeneraattori lg = new LuolaGeneraattori();
         int huoneidenMaara = lg.getHuoneidenMaara();
         int kaytavienMaara = lg.getKaytavienMaara();
         assertEquals(huoneidenMaara, kaytavienMaara + 1);
     }
+    
+    
+    
 }

@@ -192,7 +192,7 @@ public class LuolaGeneraattori {
         }
         kayVaihtoehdotLapi(ehto, huone);
     }
-    
+
     public void kayVaihtoehdotLapi(int ehto, Huone huone) {
         Random rng = new Random();
         int x = huone.getX();
@@ -295,17 +295,17 @@ public class LuolaGeneraattori {
     }
 
     public int getKoko() {
-            return this.koko;
+        return this.koko;
     }
-    
+
     public int getHuoneidenMaara() {
-            return this.huoneidenMaara;
+        return this.huoneidenMaara;
     }
 
     public int getKaytavienMaara() {
-            return this.kaytavienMaara;
+        return this.kaytavienMaara;
     }
-    
+
     public int[][] getKartta() {
         return this.kartta;
     }
