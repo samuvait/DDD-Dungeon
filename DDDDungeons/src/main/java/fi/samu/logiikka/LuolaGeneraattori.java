@@ -233,7 +233,7 @@ public class LuolaGeneraattori {
         Huone maaranpaa = this.seuraavaHuone; // otetaan maaranpaaksi seuraava huone
         int paaX = maaranpaa.getX() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin x-koordinaatti johon käytävä liitetään
         int paaY = maaranpaa.getY() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin y-koordinaatti johon käytävä liitetään
-        while (paaX != muutettavaX && paaY != muutettavaY) { // silloin kun ei olla päätekoordinaateissa
+        while (!(paaX == muutettavaX && paaY == muutettavaY)) { // silloin kun ei olla päätekoordinaateissa
             if (muutettavaY < paaY) { // katsotaan onko lähtö y pienempi vai suurempi, ja liikutaan sen mukaan
                 while (muutettavaY != paaY) { // jos y pienempi kasvatetaan y kunnes saman arvoinen
                     muutettavaY++;
@@ -260,7 +260,6 @@ public class LuolaGeneraattori {
     }
 
     public void teeKaytavaX(int x, int y) { // aloitetaan liikuttamalla x
-        this.kaytavienMaara++;
         int muutettavaX = x;
         int muutettavaY = y;
         kartta[muutettavaY][muutettavaX] = 1;
@@ -268,7 +267,7 @@ public class LuolaGeneraattori {
         Huone maaranpaa = this.seuraavaHuone;
         int paaX = maaranpaa.getX() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin x-koordinaatti johon käytävä liitetään
         int paaY = maaranpaa.getY() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin y-koordinaatti johon käytävä liitetään
-        while (paaX != muutettavaX && paaY != muutettavaY) { // silloin kun ei olla päätekoordinaateissa
+        while (!(paaX == muutettavaX && paaY == muutettavaY)) { // silloin kun ei olla päätekoordinaateissa
             if (muutettavaX < paaX) { // jos alku x pienempi kuin pääte x, kasvatetaan kunnes saman arvoinen
                 while (muutettavaX != paaX) {
                     muutettavaX++;
@@ -291,6 +290,9 @@ public class LuolaGeneraattori {
                     kartta[muutettavaY][muutettavaX] = 1;
                 }
             }
+        }
+        if (paaX == muutettavaX && paaY == muutettavaY) {
+            this.kaytavienMaara++;
         }
     }
 

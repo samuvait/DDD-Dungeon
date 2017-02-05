@@ -176,10 +176,17 @@ public class LuolaGeneraattoriTest {
     
     @Test
     public void oikeaMaaraHuoneitaJaKaytavia() {
-        LuolaGeneraattori lg = new LuolaGeneraattori();
-        int huoneidenMaara = lg.getHuoneidenMaara();
-        int kaytavienMaara = lg.getKaytavienMaara();
-        assertEquals(huoneidenMaara, kaytavienMaara + 1);
+        boolean kaikissaOikeaMaara = true;
+        for (int i = 0; i < 100; i++) {
+            LuolaGeneraattori lg = new LuolaGeneraattori();
+            int huoneidenMaara = lg.getHuoneidenMaara();
+            int kaytavienMaara = lg.getKaytavienMaara();
+            if (huoneidenMaara != kaytavienMaara + 1) {
+                kaikissaOikeaMaara = false;
+                break;
+            }
+        }
+        assertTrue(kaikissaOikeaMaara);
     }
     
     
