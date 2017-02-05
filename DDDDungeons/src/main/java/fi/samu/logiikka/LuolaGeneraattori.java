@@ -167,102 +167,66 @@ public class LuolaGeneraattori {
 
     public void kayVaihtoehdotLapi(int ehto, Huone huone) {
         Random rng = new Random();
-        int x = huone.getX();
-        int y = huone.getY();
         int huoneenLeveys = huone.getHuoneenLeveys();
-        int muutettavaX;
-        int muutettavaY;
-        switch (ehto) { //kaikki tapaukset 0 = huoneen yläosa 1 = vasen sivu 2 = oikea sivu 3 = alaosa
-            case 0:
-                muutettavaX = x + rng.nextInt(huoneenLeveys - 1);
-                muutettavaY = y; // System.out.println(x + " " + y + " huone: " + muutettavaX + " " + muutettavaY);
-                teeKaytavaX(muutettavaX, muutettavaY); // aloitetaan siirtämällä x
-                break;
-            case 1:
-                muutettavaX = x;
-                muutettavaY = y + rng.nextInt(huoneenLeveys - 1); // System.out.println(x + " " + y + " huone: " + muutettavaX + " " + muutettavaY);
-                teeKaytavaY(muutettavaX, muutettavaY); // aloitetaan siirtämällä y
-                break;
-            case 2:
-                muutettavaX = x + huoneenLeveys;
-                muutettavaY = y + rng.nextInt(huoneenLeveys - 1); // System.out.println(x + " " + y + " huone: " + muutettavaX + " " + muutettavaY);
-                teeKaytavaY(muutettavaX, muutettavaY);
-                break;
-            case 3:
-                muutettavaX = x + rng.nextInt(huoneenLeveys - 1);
-                muutettavaY = y + huoneenLeveys; // System.out.println(x + " " + y + " huone: " + muutettavaX + " " + muutettavaY);
-                teeKaytavaX(muutettavaX, muutettavaY);
-                break;
+        int muutettavaX = huone.getX();
+        int muutettavaY = huone.getY();
+        int aloitusSuunta;
+        if (ehto == 1 || ehto == 2) {
+            aloitusSuunta = 0; // aloitetaan siirtämällä y
+            muutettavaY += rng.nextInt(huoneenLeveys - 1);
+        } else {
+            aloitusSuunta = 1; // aloitetaan siirtämällä x
+            muutettavaX += rng.nextInt(huoneenLeveys - 1);
         }
+        if (ehto == 2) {
+            muutettavaX += huoneenLeveys;
+        } else if (ehto == 3) {
+            muutettavaY += huoneenLeveys;
+        }
+        teeKaytava(muutettavaX, muutettavaY, aloitusSuunta);
     }
 
-    public void teeKaytavaY(int x, int y) { // aloitetaan liikuttamalla y
+    public void teeKaytava(int x, int y, int aloitusSuunta) { // aloitetaan liikuttamalla y
         int muutettavaX = x;
         int muutettavaY = y;
+        int aloitus = aloitusSuunta;
         kartta[muutettavaY][muutettavaX] = 1;
         Random rng = new Random();
         Huone maaranpaa = this.seuraavaHuone; // otetaan maaranpaaksi seuraava huone
         int paaX = maaranpaa.getX() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin x-koordinaatti johon käytävä liitetään
         int paaY = maaranpaa.getY() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin y-koordinaatti johon käytävä liitetään
-        if (muutettavaY < paaY) { // katsotaan onko lähtö y pienempi vai suurempi, ja liikutaan sen mukaan
-            while (muutettavaY != paaY) { // jos y pienempi kasvatetaan y kunnes saman arvoinen
-                muutettavaY++;
-                kartta[muutettavaY][muutettavaX] = 1;
+        while (true) {
+            if (paaX == muutettavaX && paaY == muutettavaY) {
+                this.kaytavienMaara++;
+                break;
             }
-        } else {
-            while (muutettavaY != paaY) { //jos y suurempi vähennetään y kunnes saman arvoinen
-                muutettavaY--;
-                kartta[muutettavaY][muutettavaX] = 1;
+            if (aloitus == 0) {
+                aloitus = 1;
+                if (muutettavaY < paaY) { // katsotaan onko lähtö y pienempi vai suurempi, ja liikutaan sen mukaan
+                    while (muutettavaY != paaY) { // jos y pienempi kasvatetaan y kunnes saman arvoinen
+                        muutettavaY++;
+                        kartta[muutettavaY][muutettavaX] = 1;
+                    }
+                } else {
+                    while (muutettavaY != paaY) { //jos y suurempi vähennetään y kunnes saman arvoinen
+                        muutettavaY--;
+                        kartta[muutettavaY][muutettavaX] = 1;
+                    }
+                }
+            } else {
+                aloitus = 0;
+                if (muutettavaX < paaX) { // sama x:n arvoille y:n jälkeen
+                    while (muutettavaX != paaX) {
+                        muutettavaX++;
+                        kartta[muutettavaY][muutettavaX] = 1;
+                    }
+                } else {
+                    while (muutettavaX != paaX) {
+                        muutettavaX--;
+                        kartta[muutettavaY][muutettavaX] = 1;
+                    }
+                }
             }
-        }
-        if (muutettavaX < paaX) { // sama x:n arvoille y:n jälkeen
-            while (muutettavaX != paaX) {
-                muutettavaX++;
-                kartta[muutettavaY][muutettavaX] = 1;
-            }
-        } else {
-            while (muutettavaX != paaX) {
-                muutettavaX--;
-                kartta[muutettavaY][muutettavaX] = 1;
-            }
-        }
-        if (paaX == muutettavaX && paaY == muutettavaY) {
-            this.kaytavienMaara++;
-        }
-    }
-
-    public void teeKaytavaX(int x, int y) { // aloitetaan liikuttamalla x
-        int muutettavaX = x;
-        int muutettavaY = y;
-        kartta[muutettavaY][muutettavaX] = 1;
-        Random rng = new Random();
-        Huone maaranpaa = this.seuraavaHuone;
-        int paaX = maaranpaa.getX() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin x-koordinaatti johon käytävä liitetään
-        int paaY = maaranpaa.getY() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin y-koordinaatti johon käytävä liitetään
-        if (muutettavaX < paaX) { // jos alku x pienempi kuin pääte x, kasvatetaan kunnes saman arvoinen
-            while (muutettavaX != paaX) {
-                muutettavaX++;
-                kartta[muutettavaY][muutettavaX] = 1;
-            }
-        } else { // jos alku x suurempi kuin pääte x, vähennetään kunnes saman arvoinen
-            while (muutettavaX != paaX) {
-                muutettavaX--;
-                kartta[muutettavaY][muutettavaX] = 1;
-            }
-        }
-        if (muutettavaY < paaY) { // sama y:n arvoille x:n jälkeen
-            while (muutettavaY != paaY) {
-                muutettavaY++;
-                kartta[muutettavaY][muutettavaX] = 1;
-            }
-        } else {
-            while (muutettavaY != paaY) {
-                muutettavaY--;
-                kartta[muutettavaY][muutettavaX] = 1;
-            }
-        }
-        if (paaX == muutettavaX && paaY == muutettavaY) {
-            this.kaytavienMaara++;
         }
     }
 
