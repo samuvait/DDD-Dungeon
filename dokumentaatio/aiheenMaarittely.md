@@ -18,5 +18,5 @@ Peli sisältää generaattorin joka luo uuden kerroksen aina kun pelaaja menee a
 
 ##### Luokkakaavio
 
-![Kuva luokkakaaviosta]( /dokumentaatio/Luokkakaavio.png
+![Kuva luokkakaaviosta](/dokumentaatio/Luokkakaavio.png
 )
