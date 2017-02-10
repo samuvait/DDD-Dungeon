@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
- * @author Samu
+ * Luokka luo ja sijoittaa hirviöt joita vastaan pelaaja taistelee, sekä
+ * tarkistaa osuuko pelaaja niihin ja hoitaa niiden liikkeen
  */
 public class Viholliset {
 

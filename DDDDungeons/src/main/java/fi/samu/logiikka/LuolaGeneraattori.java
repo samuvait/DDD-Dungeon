@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
- * @author Samu
+ * Luokka luo luolaan kerroksen, ja sijoittaa sinne huoneita ja käytäviä.
  */
 public class LuolaGeneraattori {
 
@@ -58,6 +57,9 @@ public class LuolaGeneraattori {
         }
     }
 
+    /**
+     * Metodi luo luolan kerroksen, kaikki huoneet ja käytävät
+     */
     public void alustaLuola() {
         this.tayttoAste = (this.koko * this.koko) / 3; //Täyttöasteen määritys, vaikuttaa siihen paljonko kartan pinta-alasta täytetään huoneilla.
         alustaKartta(this.koko);
@@ -67,6 +69,9 @@ public class LuolaGeneraattori {
         sijoitaAlkuJaLoppu();
     }
 
+    /**
+     * Tulostaa kartan.
+     */
     public void tulostaKartta() {
         boolean rivinvaihto = false;
         for (int i = 0; i < koko; i++) {
@@ -83,6 +88,11 @@ public class LuolaGeneraattori {
         System.out.println();
     }
 
+    /**
+     * Nollaa kaikki alkiot kartan sisällä.
+     *
+     * @param koko sivun pituus kartalla
+     */
     public void alustaKartta(int koko) { // Nollaa kartan kaikki alkiot
         kartta = new int[koko][koko];
         for (int i = 0; i < koko; i++) {
@@ -92,6 +102,10 @@ public class LuolaGeneraattori {
         }
     }
 
+    /**
+     * Luo listan huoneista perustuen täyttöasteeseen joka on määritelty
+     * aiemmin.
+     */
     public void luoHuoneet() { // Luo listan huoneista, jotka sijoitetaan karttaan.
         Random rng = new Random();
         huoneLista = new ArrayList();
@@ -105,6 +119,10 @@ public class LuolaGeneraattori {
         }
     }
 
+    /**
+     * Pyrkii sijoittamaan aiemmin luodut huoneet kartalle, kokeillen jokaista
+     * huonetta 100 kertaa.
+     */
     public void sijoitaHuoneet() { // Huoneiden sijoittamisen algoritmi
         ArrayList<Integer> tempHuoneLista = new ArrayList(huoneLista);
         this.sijoitetutHuoneet = new ArrayList();
@@ -127,6 +145,15 @@ public class LuolaGeneraattori {
         }
     }
 
+    /**
+     * Tarkistaa voidaanko tähän tilaan sijoittaa haluttu huone eli mahtuuko se
+     * siihen, ilman että se menee minkään muun huoneen vierelle.
+     *
+     * @param x huoneen vasemman yläkulman x koordinaatti
+     * @param y huoneen vasemman yläkulman y koordinaatti
+     * @param sijoitettavaHuone huoneen sivun leveys.
+     * @return Jos voidaan sijoittaa, palauttaa tosi.
+     */
     public boolean tarkistaOnkoAvoin(int x, int y, int sijoitettavaHuone) { // Tarkistaa, että huone mahtuu kokonaisuudessaan tilaan
         int viimeinenX = sijoitettavaHuone + x + 1; // viimeisen tarkistettavan täytyy mennä yli, jotta huoneet eivät ole vierekkäin
         int aloitusX = x - 1; //viimeisen aloitettavan täytyy alkaa aiemmin samasta syystä
@@ -148,6 +175,13 @@ public class LuolaGeneraattori {
         return true;
     }
 
+    /**
+     * Täyttää huoneen ykkösillä kartalla.
+     *
+     * @param x vasen yläkulma x
+     * @param y vasen yläkulma y
+     * @param sijoitettavaHuone sivun pituus
+     */
     public void taytaHuone(int x, int y, int sijoitettavaHuone) { //Vaihtaa huoneen paikat kartalla 0:sta 1:ksi
         for (int muutettavaY = y; muutettavaY < sijoitettavaHuone + y && muutettavaY < koko; muutettavaY++) {
             for (int muutettavaX = x; muutettavaX < sijoitettavaHuone + x && muutettavaX < koko; muutettavaX++) {
@@ -156,6 +190,9 @@ public class LuolaGeneraattori {
         }
     }
 
+    /**
+     *
+     */
     public void luoKaytavat() { // Luodaan käytävät huoneiden välillä jotta niissä pystyy liikkumaan
         sijoitetutHuoneetPoisto = new ArrayList(sijoitetutHuoneet);
         if (!sijoitetutHuoneetPoisto.isEmpty()) {

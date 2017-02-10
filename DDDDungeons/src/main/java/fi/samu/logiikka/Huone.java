@@ -1,21 +1,19 @@
-
 package fi.samu.logiikka;
 
 /**
- *
- * @author Samu
+ * Luokka antaa huoneen vasemman yläkulman koordinaatit sekä sen leveyden
  */
 public class Huone {
-    
+
     private int x;
     private int y;
     private int huoneenLeveys;
     private int huoneenPituus;
-    
+
     public Huone(int x, int y, int huoneenLeveys) {
         luoHuone(x, y, huoneenLeveys);
     }
-    
+
     public void luoHuone(int x, int y, int huoneenLeveys) {
         if (x < 0) {
             this.x = 0;
@@ -33,16 +31,19 @@ public class Huone {
             this.huoneenLeveys = huoneenLeveys;
         }
     }
-    
+
     public int getX() {
         return this.x;
     }
+
     public int getY() {
         return this.y;
     }
+
     public int getHuoneenLeveys() {
         return this.huoneenLeveys;
     }
+
     public int getHuoneenPituus() {
         return this.huoneenPituus;
     }

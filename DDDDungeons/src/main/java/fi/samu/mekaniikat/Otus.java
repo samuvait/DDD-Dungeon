@@ -3,8 +3,7 @@ package fi.samu.mekaniikat;
 import fi.samu.logiikka.Koordinaatti;
 
 /**
- *
- * @author Samu
+ * Luokka kuvaa hirviöitä, joita vastaan pelaaja taistelee
  */
 public class Otus {
 

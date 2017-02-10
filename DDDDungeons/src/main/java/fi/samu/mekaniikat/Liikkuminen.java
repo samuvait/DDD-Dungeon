@@ -7,8 +7,8 @@ import fi.samu.logiikka.Koordinaatti;
 import fi.samu.logiikka.Huone;
 
 /**
- *
- * @author Samu
+ * Luokka hoitaa luolastossa liikkumisen Pelaajan osalta, sekä päivittää
+ * luolastoa pelaajan edetessä syvemmälle ja syvemmälle.
  */
 public class Liikkuminen {
 
