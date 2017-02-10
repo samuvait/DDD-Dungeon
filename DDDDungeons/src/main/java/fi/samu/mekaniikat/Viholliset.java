@@ -1,4 +1,3 @@
-
 package fi.samu.mekaniikat;
 
 import fi.samu.logiikka.Koordinaatti;
@@ -11,25 +10,27 @@ import java.util.Random;
  * @author Samu
  */
 public class Viholliset {
-    
+
     private int kerros;
     private int koko;
     private ArrayList<Otus> viholliset;
     private ArrayList<Huone> sijoitetutHuoneet;
     private int[][] kartta;
-    
+    private int varmistus;
+    private int lkm;
+
     public Viholliset(int koko, int kerros, ArrayList<Huone> sijoitetutHuoneet, int[][] kartta) {
         this.kartta = kartta;
         this.kerros = kerros;
         this.sijoitetutHuoneet = new ArrayList(sijoitetutHuoneet);
     }
-    
+
     public void luoViholliset() {
         viholliset = new ArrayList();
         Random rng = new Random();
-        int varmistus = sijoitetutHuoneet.size();
         this.sijoitetutHuoneet.remove(0);
-        int lkm = 0;
+        varmistus = sijoitetutHuoneet.size();
+        lkm = 0;
         int tyyppiMax = kerros;
         if (tyyppiMax > 1) {
             tyyppiMax = 1;
@@ -47,7 +48,7 @@ public class Viholliset {
         }
         //System.out.println(varmistus + " =? " + lkm);
     }
-    
+
     public boolean tarkista(Koordinaatti koordinaatti) {
         boolean ret = false;
         if (viholliset != null) {
@@ -61,7 +62,19 @@ public class Viholliset {
         }
         return ret;
     }
-    
+
+    public ArrayList<Otus> getVihollisLista() {
+        return this.viholliset;
+    }
+
+    public int getVarmistus() {
+        return this.varmistus;
+    }
+
+    public int getlkm() {
+        return this.varmistus;
+    }
+
     public void tulostaViholliset() {
         for (Otus otus : viholliset) {
             System.out.println(otus);

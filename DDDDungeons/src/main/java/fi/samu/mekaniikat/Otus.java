@@ -17,7 +17,15 @@ public class Otus {
     private int taisteleeko;
     
     public Otus(int x, int y, int tyyppi) {
-        koordinaatit = new Koordinaatti(x, y);
+        int uusiX = x;
+        if (x < 0) {
+            uusiX = 0;
+        }
+        int uusiY = y;
+        if (y < 0) {
+            uusiY = 0;
+        }
+        koordinaatit = new Koordinaatti(uusiX, uusiY);
         liikkuuko = 0;
         taisteleeko = 0;
         if (tyyppi == 0) {

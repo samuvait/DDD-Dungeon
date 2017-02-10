@@ -1,4 +1,3 @@
-
 package fi.samu.logiikka;
 
 import java.util.ArrayList;
@@ -14,14 +13,13 @@ import static org.junit.Assert.*;
  * @author Samu
  */
 public class LuolaGeneraattoriTest {
-    
+
     int luolanKokoMin;
-    
+
     @Before
     public void setUp() {
         luolanKokoMin = 10;
     }
-    
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
@@ -34,18 +32,19 @@ public class LuolaGeneraattoriTest {
         lg.alustaLuola();
         assertEquals(10, lg.getKoko());
     }
+
     @Test
     public void luolanLuominenNollalla() {
         LuolaGeneraattori lg = new LuolaGeneraattori(0, 3, 8);
         assertEquals(10, lg.getKoko());
     }
-    
+
     @Test
     public void luolanLuominenOikeallaLuvulla() {
         LuolaGeneraattori lg = new LuolaGeneraattori(100, 3, 8);
         assertEquals(100, lg.getKoko());
     }
-    
+
     @Test
     public void alustettuOikeinTyhjaksi() {
         int luolanKoko = 50;
@@ -62,7 +61,7 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(kaviLapiOikein);
     }
-    
+
     @Test
     public void alustettuOikeinTyhjaksiNollalla() {
         boolean kaviLapiOikein = true;
@@ -78,7 +77,7 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(kaviLapiOikein);
     }
-    
+
     @Test
     public void alustettuOikeinTyhjaksiNegatiivisella() {
         boolean kaviLapiOikein = true;
@@ -98,8 +97,7 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(kaviLapiOikein);
     }
-    
-    
+
     @Test
     public void luotuHuoneetOikeanKokoisiksi() {
         boolean oikeanKokoisetHuoneet = true;
@@ -115,7 +113,7 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(oikeanKokoisetHuoneet);
     }
-    
+
     @Test
     public void luotuHuoneetOikeinLiianIsoillaArvoilla() {
         boolean oikeanKokoisetHuoneet = true;
@@ -133,7 +131,7 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(oikeanKokoisetHuoneet);
     }
-    
+
     @Test
     public void luotuHuoneetOikeinLiianPienillaArvoilla() {
         boolean oikeanKokoisetHuoneet = true;
@@ -151,7 +149,7 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(oikeanKokoisetHuoneet);
     }
-    
+
     @Test
     public void huoneetPienempiaKuinKartta() {
         boolean huoneetPienempia = true;
@@ -168,7 +166,7 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(huoneetPienempia);
     }
-    
+
     @Test
     public void oikeaMaaraHuoneitaJaKaytavia() {
         boolean kaikissaOikeaMaara = true;

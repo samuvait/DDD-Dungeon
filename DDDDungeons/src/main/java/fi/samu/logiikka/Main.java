@@ -1,4 +1,3 @@
-
 package fi.samu.logiikka;
 
 import fi.samu.mekaniikat.Liikkuminen;
@@ -9,7 +8,7 @@ import java.util.Scanner;
  * @author Samu
  */
 public class Main {
-    
+
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         LuolaGeneraattori lg = new LuolaGeneraattori(15, 3, 4);
@@ -32,7 +31,7 @@ public class Main {
             }
             lg.tulostaKartta();
         }
-        
+
 //        liik.liiku(0);
 //        lg.tulostaKartta();
 //        liik.liiku(1);
