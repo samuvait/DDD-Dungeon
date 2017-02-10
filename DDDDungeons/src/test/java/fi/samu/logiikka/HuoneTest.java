@@ -62,10 +62,4 @@ public class HuoneTest {
         Huone uusiHuone = new Huone(2, 5, -1);
         assertEquals(3, uusiHuone.getHuoneenLeveys());
     }
-    
-    @Test
-    public void huoneenPituusOikein() {
-        Huone uusiHuone = new Huone(2, 5, 3, 6);
-        assertEquals(6, uusiHuone.getHuoneenPituus());
-    }
 }

@@ -15,24 +15,10 @@ import static org.junit.Assert.*;
  */
 public class LuolaGeneraattoriTest {
     
-    public LuolaGeneraattoriTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
     }
     
-    @After
-    public void tearDown() {
-    }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
@@ -42,6 +28,7 @@ public class LuolaGeneraattoriTest {
     @Test
     public void luolanLuominenNegatiivisella() {
         LuolaGeneraattori lg = new LuolaGeneraattori(-1, 3, 8);
+        lg.alustaLuola();
         assertEquals(25, lg.getKoko());
     }
     @Test
@@ -61,6 +48,7 @@ public class LuolaGeneraattoriTest {
         int luolanKoko = 50;
         boolean kaviLapiOikein = true;
         LuolaGeneraattori lg = new LuolaGeneraattori(luolanKoko, 3, 8);
+        lg.alustaLuola();
         int[][] kartta = lg.getKartta();
         for (int i = 0; i < luolanKoko; i++) {
             for (int j = 0; j < luolanKoko; j++) {
@@ -77,6 +65,7 @@ public class LuolaGeneraattoriTest {
         int luolanKoko = 25;
         boolean kaviLapiOikein = true;
         LuolaGeneraattori lg = new LuolaGeneraattori(0, 3, 8);
+        lg.alustaLuola();
         int[][] kartta = lg.getKartta();
         for (int i = 0; i < luolanKoko; i++) {
             for (int j = 0; j < luolanKoko; j++) {
@@ -93,6 +82,7 @@ public class LuolaGeneraattoriTest {
         int luolanKoko = 25;
         boolean kaviLapiOikein = true;
         LuolaGeneraattori lg = new LuolaGeneraattori(-1, 3, 8);
+        lg.alustaLuola();
         int[][] kartta = lg.getKartta();
         for (int i = 0; i < luolanKoko; i++) {
             for (int j = 0; j < luolanKoko; j++) {
@@ -113,6 +103,7 @@ public class LuolaGeneraattoriTest {
     public void luotuHuoneetOikeanKokoisiksi() {
         boolean oikeanKokoisetHuoneet = true;
         LuolaGeneraattori lg = new LuolaGeneraattori(25, 4, 7);
+        lg.alustaLuola();
         ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
             int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
@@ -130,6 +121,7 @@ public class LuolaGeneraattoriTest {
         int minimi = 26;
         int maksimi = 50;
         LuolaGeneraattori lg = new LuolaGeneraattori(25, minimi, maksimi);
+        lg.alustaLuola();
         ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
             int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
@@ -147,6 +139,7 @@ public class LuolaGeneraattoriTest {
         int minimi = 0;
         int maksimi = 2;
         LuolaGeneraattori lg = new LuolaGeneraattori(25, minimi, maksimi);
+        lg.alustaLuola();
         ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
             int huoneenKoko = huoneLista.remove(huoneLista.size() - 1);
@@ -162,6 +155,7 @@ public class LuolaGeneraattoriTest {
     public void huoneetPienempiaKuinKartta() {
         boolean huoneetPienempia = true;
         LuolaGeneraattori lg = new LuolaGeneraattori();
+        lg.alustaLuola();
         int summa = 0;
         ArrayList<Integer> huoneLista = new ArrayList(lg.getHuoneLista());
         while (!huoneLista.isEmpty()) {
@@ -179,6 +173,7 @@ public class LuolaGeneraattoriTest {
         boolean kaikissaOikeaMaara = true;
         for (int i = 0; i < 1000; i++) {
             LuolaGeneraattori lg = new LuolaGeneraattori();
+            lg.alustaLuola();
             int huoneidenMaara = lg.getHuoneidenMaara();
             int kaytavienMaara = lg.getKaytavienMaara();
             if (huoneidenMaara != kaytavienMaara + 1) {
@@ -188,7 +183,4 @@ public class LuolaGeneraattoriTest {
         }
         assertTrue(kaikissaOikeaMaara);
     }
-    
-    
-    
 }

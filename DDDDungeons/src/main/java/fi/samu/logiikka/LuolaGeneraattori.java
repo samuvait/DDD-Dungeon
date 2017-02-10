@@ -1,7 +1,6 @@
 package fi.samu.logiikka;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -17,25 +16,32 @@ public class LuolaGeneraattori {
     private int huoneenLeveysMinimi;
     private int huoneenLeveysMaksimi;
     private ArrayList<Huone> sijoitetutHuoneet;
+    private ArrayList<Huone> sijoitetutHuoneetPoisto;
     private int huoneidenMaara = 0;
     private int kaytavienMaara = 0;
     private Huone nykyinenHuone;
     private Huone seuraavaHuone;
+    private Koordinaatti alkuPiste;
+    private Koordinaatti loppuPiste;
 
     public LuolaGeneraattori() {
-        alustaLuola(25, 3, 8);
+        this.koko = 25;
+        this.huoneenLeveysMinimi = 3;
+        this.huoneenLeveysMaksimi = 8;
     }
 
     public LuolaGeneraattori(int koko) {
-        alustaLuola(koko, 3, 8);
+        if (koko < 25) {
+            this.koko = 25;  // Kartan minimikoko tällä hetkellä 25
+        } else {
+            this.koko = koko;  // Kartan sivun pituus, vaatii kokeilua oikean löytämiseksi
+        }
+        this.huoneenLeveysMinimi = 3;
+        this.huoneenLeveysMaksimi = 8;
     }
 
     public LuolaGeneraattori(int koko, int huoneenLeveysMinimi, int huoneenLeveysMaksimi) {
-        alustaLuola(koko, huoneenLeveysMinimi, huoneenLeveysMaksimi);
-    }
-
-    public void alustaLuola(int koko, int huoneenLeveysMinimi, int huoneenLeveysMaksimi) {
-        if (koko < 25) {
+         if (koko < 25) {
             this.koko = 25;  // Kartan minimikoko tällä hetkellä 25
         } else {
             this.koko = koko;  // Kartan sivun pituus, vaatii kokeilua oikean löytämiseksi
@@ -50,13 +56,15 @@ public class LuolaGeneraattori {
         } else {
             this.huoneenLeveysMaksimi = huoneenLeveysMaksimi;
         }
+    }
+    
+    public void alustaLuola() {
         this.tayttoAste = (this.koko * this.koko) / 3; //Täyttöasteen määritys, vaikuttaa siihen paljonko kartan pinta-alasta täytetään huoneilla.
         alustaKartta(this.koko);
         luoHuoneet();
         sijoitaHuoneet();
         luoKaytavat();
-//        System.out.println("Huoneiden Maara: " + this.huoneidenMaara);
-//        System.out.println("Kaytavien Maara: " + this.kaytavienMaara);
+        sijoitaAlkuJaLoppu();
     }
 
     public void tulostaKartta() {
@@ -66,10 +74,12 @@ public class LuolaGeneraattori {
                 System.out.println("");
             }
             for (int j = 0; j < koko; j++) {
+                //if (i == 2 && j == 3)
                 System.out.print(kartta[i][j]);
             }
             rivinvaihto = true;
         }
+        System.out.println();
     }
 
     public void alustaKartta(int koko) { // Nollaa kartan kaikki alkiot
@@ -88,7 +98,7 @@ public class LuolaGeneraattori {
         int hlmax = huoneenLeveysMaksimi;
         int kaytettyPintaAla = 0;
         while (kaytettyPintaAla < tayttoAste) {
-            int huoneenLeveys = hlmin + rng.nextInt(hlmax - hlmin); // Huoneiden koon määritys tässä 3-8 leveys ja korkeus.
+            int huoneenLeveys = 1 + hlmin + rng.nextInt(hlmax - hlmin); // Huoneiden koon määritys tässä 3-8 leveys ja korkeus.
             huoneLista.add(huoneenLeveys);
             kaytettyPintaAla += huoneenLeveys * huoneenLeveys;
         }
@@ -127,9 +137,9 @@ public class LuolaGeneraattori {
         if (aloitusY < 0) {
             aloitusY = 0;
         }
-        for (int tarkistettavaX = aloitusX; tarkistettavaX <= viimeinenX && tarkistettavaX < koko; tarkistettavaX++) { // varmista että on taulukon rajoissa
-            for (int tarkistettavaY = aloitusY; tarkistettavaY <= viimeinenY && tarkistettavaY < koko; tarkistettavaY++) {
-                if (kartta[tarkistettavaX][tarkistettavaY] != 0) {
+        for (int tarkistettavaY = aloitusY; tarkistettavaY <= viimeinenY && tarkistettavaY < koko; tarkistettavaY++) { // varmista että on taulukon rajoissa
+            for (int tarkistettavaX = aloitusX; tarkistettavaX <= viimeinenX && tarkistettavaX < koko; tarkistettavaX++) {
+                if (kartta[tarkistettavaY][tarkistettavaX] != 0) {
                     return false;
                 }
             }
@@ -138,22 +148,22 @@ public class LuolaGeneraattori {
     }
 
     public void taytaHuone(int x, int y, int sijoitettavaHuone) { //Vaihtaa huoneen paikat kartalla 0:sta 1:ksi
-
-        for (int muutettavaX = x; muutettavaX < sijoitettavaHuone + x && muutettavaX < koko; muutettavaX++) {
-            for (int muutettavaY = y; muutettavaY < sijoitettavaHuone + y && muutettavaY < koko; muutettavaY++) {
-                kartta[muutettavaX][muutettavaY] = 1;
+        for (int muutettavaY = y; muutettavaY < sijoitettavaHuone + y && muutettavaY < koko; muutettavaY++) {
+            for (int muutettavaX = x; muutettavaX < sijoitettavaHuone + x && muutettavaX < koko; muutettavaX++) {
+                kartta[muutettavaY][muutettavaX] = 1;
             }
         }
     }
 
     public void luoKaytavat() { // Luodaan käytävät huoneiden välillä jotta niissä pystyy liikkumaan
-        if (sijoitetutHuoneet != null) {
-            nykyinenHuone = sijoitetutHuoneet.remove(sijoitetutHuoneet.size() - 1); // Otetaan viimeisin huone
-            while (!sijoitetutHuoneet.isEmpty()) { // aloitetaan käymään läpi
+        ArrayList<Huone> sijoitetutHuoneetPoisto = new ArrayList(sijoitetutHuoneet);
+        if (!sijoitetutHuoneetPoisto.isEmpty()) {
+            nykyinenHuone = sijoitetutHuoneetPoisto.remove(sijoitetutHuoneetPoisto.size() - 1); // Otetaan viimeisin huone
+            while (!sijoitetutHuoneetPoisto.isEmpty()) { // aloitetaan käymään läpi
                 if (seuraavaHuone != null) { // jos ei vielä määritetty seuraavaa huonetta, eli ensimmäinen kerta
                     nykyinenHuone = seuraavaHuone; // muutetaan huone johon luotiin käytävä huoneeksi, josta aloitetaan luomaan käytävä
                 }
-                seuraavaHuone = sijoitetutHuoneet.remove(sijoitetutHuoneet.size() - 1); // otetaan huone, johon ensimmäisestä luodaan käytävä
+                seuraavaHuone = sijoitetutHuoneetPoisto.remove(sijoitetutHuoneetPoisto.size() - 1); // otetaan huone, johon ensimmäisestä luodaan käytävä
                 arvoAloitusPaikat(nykyinenHuone);
             }
         }
@@ -171,10 +181,10 @@ public class LuolaGeneraattori {
         int muutettavaX = huone.getX();
         int muutettavaY = huone.getY();
         int aloitusSuunta;
-        if (ehto == 1 || ehto == 2) {
+        if (ehto == 1 || ehto == 2) { // Vasen tai oikea sivu
             aloitusSuunta = 0; // aloitetaan siirtämällä y
             muutettavaY += rng.nextInt(huoneenLeveys - 1);
-        } else {
+        } else { // ylös tai alas
             aloitusSuunta = 1; // aloitetaan siirtämällä x
             muutettavaX += rng.nextInt(huoneenLeveys - 1);
         }
@@ -186,15 +196,15 @@ public class LuolaGeneraattori {
         teeKaytava(muutettavaX, muutettavaY, aloitusSuunta);
     }
 
-    public void teeKaytava(int x, int y, int aloitusSuunta) { // aloitetaan liikuttamalla y
+    public void teeKaytava(int x, int y, int aloitusSuunta) { // Tehdaan kaytava kahden pisteen valille
         int muutettavaX = x;
         int muutettavaY = y;
         int aloitus = aloitusSuunta;
         kartta[muutettavaY][muutettavaX] = 1;
         Random rng = new Random();
         Huone maaranpaa = this.seuraavaHuone; // otetaan maaranpaaksi seuraava huone
-        int paaX = maaranpaa.getX() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin x-koordinaatti johon käytävä liitetään
-        int paaY = maaranpaa.getY() + rng.nextInt(maaranpaa.getHuoneenLeveys() - 1); // arvotaan jokin y-koordinaatti johon käytävä liitetään
+        int paaX = maaranpaa.getX() + rng.nextInt(maaranpaa.getHuoneenLeveys()); // arvotaan jokin x-koordinaatti johon käytävä liitetään
+        int paaY = maaranpaa.getY() + rng.nextInt(maaranpaa.getHuoneenLeveys()); // arvotaan jokin y-koordinaatti johon käytävä liitetään
         while (true) {
             if (paaX == muutettavaX && paaY == muutettavaY) {
                 this.kaytavienMaara++;
@@ -228,6 +238,26 @@ public class LuolaGeneraattori {
                 }
             }
         }
+    }
+    
+    public void sijoitaAlkuJaLoppu() { //sijoittaa portaat, josta pelaaja tuli luolan tähän kerrokseen
+        Random rng = new Random();
+        Huone aloitusHuone = this.sijoitetutHuoneet.get(sijoitetutHuoneet.size() - 1);
+        Huone lopetusHuone = this.sijoitetutHuoneet.get(0);
+        int aloitusX = aloitusHuone.getX() + rng.nextInt(aloitusHuone.getHuoneenLeveys()); // arvotaan jokin x-koordinaatti johon käytävä liitetään
+        int aloitusY = aloitusHuone.getY() + rng.nextInt(aloitusHuone.getHuoneenLeveys());
+        this.alkuPiste = new Koordinaatti(aloitusX, aloitusY);
+        int lopetusX = lopetusHuone.getX() + rng.nextInt(lopetusHuone.getHuoneenLeveys()); // arvotaan jokin x-koordinaatti johon käytävä liitetään
+        int lopetusY = lopetusHuone.getY() + rng.nextInt(lopetusHuone.getHuoneenLeveys());
+        this.loppuPiste = new Koordinaatti(lopetusX, lopetusY);
+    }
+    
+    public Koordinaatti getAlku() {
+        return this.alkuPiste;
+    }
+    
+    public Koordinaatti getLoppu() {
+        return this.loppuPiste;
     }
 
     public int getKoko() {
