@@ -6,3 +6,4 @@ Päivä | Tunnit | Kuvaus
 02.02.2017 | 3h | Luolan generoinnin koodin lisäys ja hiominen
 03.02.2017 | 5h | Luolan generoinnin viimeistely
 10.02.2017 | 6h | Liikkumisen aloittaminen
+... | ... | ...
