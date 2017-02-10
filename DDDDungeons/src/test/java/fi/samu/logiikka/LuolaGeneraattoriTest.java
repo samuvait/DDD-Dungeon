@@ -15,8 +15,11 @@ import static org.junit.Assert.*;
  */
 public class LuolaGeneraattoriTest {
     
+    int luolanKokoMin;
+    
     @Before
     public void setUp() {
+        luolanKokoMin = 10;
     }
     
 
@@ -29,12 +32,12 @@ public class LuolaGeneraattoriTest {
     public void luolanLuominenNegatiivisella() {
         LuolaGeneraattori lg = new LuolaGeneraattori(-1, 3, 8);
         lg.alustaLuola();
-        assertEquals(25, lg.getKoko());
+        assertEquals(10, lg.getKoko());
     }
     @Test
     public void luolanLuominenNollalla() {
         LuolaGeneraattori lg = new LuolaGeneraattori(0, 3, 8);
-        assertEquals(25, lg.getKoko());
+        assertEquals(10, lg.getKoko());
     }
     
     @Test
@@ -62,13 +65,12 @@ public class LuolaGeneraattoriTest {
     
     @Test
     public void alustettuOikeinTyhjaksiNollalla() {
-        int luolanKoko = 25;
         boolean kaviLapiOikein = true;
         LuolaGeneraattori lg = new LuolaGeneraattori(0, 3, 8);
         lg.alustaLuola();
         int[][] kartta = lg.getKartta();
-        for (int i = 0; i < luolanKoko; i++) {
-            for (int j = 0; j < luolanKoko; j++) {
+        for (int i = 0; i < luolanKokoMin; i++) {
+            for (int j = 0; j < luolanKokoMin; j++) {
                 if (!(kartta[i][j] == 0 || kartta[i][j] == 1)) {
                     kaviLapiOikein = false;
                 }
@@ -79,13 +81,12 @@ public class LuolaGeneraattoriTest {
     
     @Test
     public void alustettuOikeinTyhjaksiNegatiivisella() {
-        int luolanKoko = 25;
         boolean kaviLapiOikein = true;
         LuolaGeneraattori lg = new LuolaGeneraattori(-1, 3, 8);
         lg.alustaLuola();
         int[][] kartta = lg.getKartta();
-        for (int i = 0; i < luolanKoko; i++) {
-            for (int j = 0; j < luolanKoko; j++) {
+        for (int i = 0; i < luolanKokoMin; i++) {
+            for (int j = 0; j < luolanKokoMin; j++) {
                 if (!(kartta[i][j] == 0 || kartta[i][j] == 1)) {
                     kaviLapiOikein = false;
                     break;
