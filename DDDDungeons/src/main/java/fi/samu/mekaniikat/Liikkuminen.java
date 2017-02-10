@@ -52,7 +52,7 @@ public class Liikkuminen {
         if (suunta == 0 && y > 0) {
             if (kartta[y - 1][x] != 0) {
                 if (viholliset.tarkista(pelKoor)) {
-
+                    y = y;
                 } else {
                     y--;
                 }
@@ -64,7 +64,7 @@ public class Liikkuminen {
         } else if (suunta == 2 && x < koko - 1) {
             if (kartta[y][x + 1] != 0) {
                 if (viholliset.tarkista(pelKoor)) {
-
+                    y = y;
                 } else {
                     x++;
                 }
@@ -72,7 +72,7 @@ public class Liikkuminen {
         } else if (suunta == 3 && y < koko - 1) {
             if (kartta[y + 1][x] != 0) {
                 if (viholliset.tarkista(pelKoor)) {
-
+                    y = y;
                 } else {
                     y++;
                 }

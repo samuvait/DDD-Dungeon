@@ -41,7 +41,7 @@ public class LuolaGeneraattori {
     }
 
     public LuolaGeneraattori(int koko, int huoneenLeveysMinimi, int huoneenLeveysMaksimi) {
-         if (koko < 10) {
+        if (koko < 10) {
             this.koko = 10;  // Kartan minimikoko tällä hetkellä 25
         } else {
             this.koko = koko;  // Kartan sivun pituus, vaatii kokeilua oikean löytämiseksi
@@ -57,7 +57,7 @@ public class LuolaGeneraattori {
             this.huoneenLeveysMaksimi = huoneenLeveysMaksimi;
         }
     }
-    
+
     public void alustaLuola() {
         this.tayttoAste = (this.koko * this.koko) / 3; //Täyttöasteen määritys, vaikuttaa siihen paljonko kartan pinta-alasta täytetään huoneilla.
         alustaKartta(this.koko);
@@ -240,7 +240,7 @@ public class LuolaGeneraattori {
             }
         }
     }
-    
+
     public void sijoitaAlkuJaLoppu() { //sijoittaa portaat, josta pelaaja tuli luolan tähän kerrokseen
         Random rng = new Random();
         Huone aloitusHuone = this.sijoitetutHuoneet.get(0);
@@ -252,11 +252,11 @@ public class LuolaGeneraattori {
         int lopetusY = lopetusHuone.getY() + rng.nextInt(lopetusHuone.getHuoneenLeveys());
         this.loppuPiste = new Koordinaatti(lopetusX, lopetusY);
     }
-    
+
     public Koordinaatti getAlku() {
         return this.alkuPiste;
     }
-    
+
     public Koordinaatti getLoppu() {
         return this.loppuPiste;
     }
