@@ -1,6 +1,7 @@
 package fi.samu.mekaniikat;
 
 import fi.samu.logiikka.Koordinaatti;
+import static java.lang.Math.abs;
 
 /**
  * Luokka kuvaa hirviöitä, joita vastaan pelaaja taistelee
@@ -30,12 +31,24 @@ public class Otus {
         if (tyyppi == 0) {
             this.hitPoints = 5;
             this.attackPower = 1;
-            this.kuvaus = "rotta";
+            this.kuvaus = "rat";
         } else {
             this.hitPoints = 5;
             this.attackPower = 1;
-            this.kuvaus = "rotta";
+            this.kuvaus = "rat";
         }
+    }
+    
+    public boolean voiTaistella(int x, int y) {
+        boolean ret = false;
+        int otusX = this.getKoordinaatit().getX();
+        int otusY = this.getKoordinaatit().getY();
+        if (abs(otusX - x) == 1 && otusY - y == 0) {
+            ret = true;
+        } else if (abs(otusY - y) == 1 && otusX - x == 0) {
+            ret = true;
+        }
+        return ret;
     }
 
     public void setKoordinaatit(Koordinaatti krdn) {
@@ -49,6 +62,14 @@ public class Otus {
 
     public void setTaisteleeko(int tst) {
         this.taisteleeko = tst;
+    }
+
+    public void setLiikkuuko(int liikkuuko) {
+        this.liikkuuko = liikkuuko;
+    }
+
+    public int getLiikkuuko() {
+        return this.liikkuuko;
     }
 
     public Koordinaatti getKoordinaatit() {
@@ -65,6 +86,10 @@ public class Otus {
 
     public int getTaisteleeko() {
         return this.taisteleeko;
+    }
+
+    public String getKuvaus() {
+        return this.kuvaus;
     }
 
     @Override

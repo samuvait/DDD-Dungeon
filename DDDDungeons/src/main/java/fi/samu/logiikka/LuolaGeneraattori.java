@@ -216,20 +216,20 @@ public class LuolaGeneraattori {
     public void kayVaihtoehdotLapi(int ehto, Huone huone) {
         Random rng = new Random();
         int huoneenLeveys = huone.getHuoneenLeveys();
-        int muutettavaX = huone.getX();
-        int muutettavaY = huone.getY();
+        int muutettavaX = huone.getX() - 1;
+        int muutettavaY = huone.getY() - 1;
         int aloitusSuunta;
         if (ehto == 1 || ehto == 2) { // Vasen tai oikea sivu
             aloitusSuunta = 0; // aloitetaan siirtämällä y
-            muutettavaY += rng.nextInt(huoneenLeveys - 1);
+            muutettavaY += 1 + rng.nextInt(huoneenLeveys);
         } else { // ylös tai alas
             aloitusSuunta = 1; // aloitetaan siirtämällä x
-            muutettavaX += rng.nextInt(huoneenLeveys - 1);
+            muutettavaX += 1 + rng.nextInt(huoneenLeveys);
         }
         if (ehto == 2) {
-            muutettavaX += huoneenLeveys;
+            muutettavaX += huoneenLeveys + 1;
         } else if (ehto == 3) {
-            muutettavaY += huoneenLeveys;
+            muutettavaY += huoneenLeveys + 1;
         }
         teeKaytava(muutettavaX, muutettavaY, aloitusSuunta);
     }
@@ -287,6 +287,10 @@ public class LuolaGeneraattori {
         this.alkuPiste = new Koordinaatti(aloitusX, aloitusY);
         int lopetusX = lopetusHuone.getX() + rng.nextInt(lopetusHuone.getHuoneenLeveys());
         int lopetusY = lopetusHuone.getY() + rng.nextInt(lopetusHuone.getHuoneenLeveys());
+        while (lopetusX == aloitusX && lopetusY == aloitusY) {
+            lopetusX = lopetusHuone.getX() + rng.nextInt(lopetusHuone.getHuoneenLeveys());
+            lopetusY = lopetusHuone.getY() + rng.nextInt(lopetusHuone.getHuoneenLeveys());
+        }
         this.loppuPiste = new Koordinaatti(lopetusX, lopetusY);
     }
 

@@ -50,7 +50,7 @@ public class VihollisetTest {
         ArrayList<Otus> vihollisLista = viholliset.getVihollisLista();
         Otus a = vihollisLista.get(0);
         boolean oliko = false;
-        if (viholliset.tarkista(a.getKoordinaatit())) {
+        if (viholliset.tarkista(a.getKoordinaatit().getX(), a.getKoordinaatit().getY())) {
             oliko = true;
         }
         assertTrue(oliko);
