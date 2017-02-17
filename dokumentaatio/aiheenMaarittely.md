@@ -20,3 +20,6 @@ Peli sisältää generaattorin joka luo uuden kerroksen aina kun pelaaja menee a
 
 ![Kuva luokkakaaviosta](/dokumentaatio/Luokkakaavio.png
 )
+
+![Kuva kerroksen vaihdosta](/dokumentaatio/KerroksenVaihto.png
+)
