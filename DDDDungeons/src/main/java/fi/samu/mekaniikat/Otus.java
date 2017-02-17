@@ -4,7 +4,7 @@ import fi.samu.logiikka.Koordinaatti;
 import static java.lang.Math.abs;
 
 /**
- * Luokka kuvaa hirviöitä, joita vastaan pelaaja taistelee
+ * Luokka kuvaa hirviöitä, joita vastaan pelaaja taistelee.
  */
 public class Otus {
 
@@ -16,6 +16,13 @@ public class Otus {
     private int liikkuuko;
     private int taisteleeko;
 
+    /**
+     * Antaa luotaessa otuksen koordinaatit, sekä sen tyypin.
+     *
+     * @param x Otuksen x-koordinaatti.
+     * @param y Otuksen y-koordinaatti.
+     * @param tyyppi Otuksen tyyppi eli sen vahvuus eli ap ja hp.
+     */
     public Otus(int x, int y, int tyyppi) {
         int uusiX = x;
         if (x < 0) {
@@ -39,6 +46,14 @@ public class Otus {
         }
     }
 
+    /**
+     * Tarkistaa, voiko otus taistella eli onko se koordinaattien vieressä,
+     * jotka on annettu.
+     *
+     * @param x x-koordinaatti, joka tarkastetaan.
+     * @param y y-koordinaatti, joka tarkastetaan.
+     * @return Jos voi taistella, eli on vieressä, palauttaa tosi.
+     */
     public boolean voiTaistella(int x, int y) {
         boolean ret = false;
         int otusX = this.getKoordinaatit().getX();
@@ -51,6 +66,11 @@ public class Otus {
         return ret;
     }
 
+    /**
+     * Muuttaa otuksen koordinaatit.
+     *
+     * @param krdn muutettavat koordinaatit.
+     */
     public void setKoordinaatit(Koordinaatti krdn) {
         koordinaatit.setX(krdn.getX());
         koordinaatit.setY(krdn.getY());

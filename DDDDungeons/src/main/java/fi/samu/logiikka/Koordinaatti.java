@@ -1,13 +1,19 @@
 package fi.samu.logiikka;
 
 /**
- * Luokassa säilytetään x ja y koordinaatteja
+ * Luokassa säilytetään x- ja y-koordinaatteja.
  */
 public class Koordinaatti {
 
     private int x;
     private int y;
 
+    /**
+     * Luokan luonnin metodi.
+     *
+     * @param x x-koordinaatti.
+     * @param y y-koordinaatti.
+     */
     public Koordinaatti(int x, int y) {
         this.x = x;
         this.y = y;

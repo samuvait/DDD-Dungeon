@@ -22,6 +22,13 @@ public class Liikkuminen {
     private int koko;
     private Viholliset viholliset;
 
+    /**
+     * Määrittelee luolageneraattorin ja luo pelaajan, sekä aloittaa
+     * liikkumisen.
+     *
+     * @param lg Luolageneraattori, jota käytetään kerroksen luomiseen ja
+     * liikkumiseen luolastossa.
+     */
     public Liikkuminen(LuolaGeneraattori lg) {
         this.lg = lg;
         this.pelaaja = new Pelaaja(0, 0);
@@ -30,6 +37,10 @@ public class Liikkuminen {
         aloitaLiikkuminen();
     }
 
+    /**
+     * Aloittaa liikkumisen uudessa kerroksessa alustamalla luolan ja
+     * sijoittamalla pelaajan ja lopetuspisteen kartalle.
+     */
     public void aloitaLiikkuminen() {
         lg.alustaLuola();
         alkuPaikka = lg.getAlku();
@@ -45,6 +56,13 @@ public class Liikkuminen {
 //        viholliset.tulostaViholliset();
     }
 
+    /**
+     * Liikuttaa pelaajaa annettuun suuntaan, ja tarkistaa voiko sinne liikkua.
+     * Jos pelaaja osuu viholliseen, pelaaja taistelee vihollisen kanssa.
+     *
+     * @param suunta Suunta johon pelaaja liikkuu 0 = ylos 1 = vasen 2 = oikea 3
+     * = alas
+     */
     public void liiku(int suunta) { // 0 = ylos 1 = vasen 2 = oikea 3 = alas
         Koordinaatti pelKoor = pelaaja.getKoordinaatit();
         int x = pelKoor.getX();

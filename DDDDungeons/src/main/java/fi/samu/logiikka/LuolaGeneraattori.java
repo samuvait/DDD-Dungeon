@@ -23,12 +23,21 @@ public class LuolaGeneraattori {
     private Koordinaatti alkuPiste;
     private Koordinaatti loppuPiste;
 
+    /**
+     * Luo luolan perusarvoilla.
+     *
+     */
     public LuolaGeneraattori() {
         this.koko = 25;
         this.huoneenLeveysMinimi = 3;
         this.huoneenLeveysMaksimi = 8;
     }
 
+    /**
+     * Luo luolan siten, että koko on annettu.
+     *
+     * @param koko Luolan koko ja kartan sivun pituus.
+     */
     public LuolaGeneraattori(int koko) {
         if (koko < 10) {
             this.koko = 10;  // Kartan minimikoko tällä hetkellä 25
@@ -39,6 +48,14 @@ public class LuolaGeneraattori {
         this.huoneenLeveysMaksimi = 8;
     }
 
+    /**
+     * Alustaa luolan siten, että koko ja huoneen leveyksien minimi ja maksimi
+     * on annettu.
+     *
+     * @param koko Luolan sivun koko ja kartan sivun pituus.
+     * @param huoneenLeveysMinimi Pienin sallittu huoneen leveys.
+     * @param huoneenLeveysMaksimi Suurin sallittu huoneen leveys.
+     */
     public LuolaGeneraattori(int koko, int huoneenLeveysMinimi, int huoneenLeveysMaksimi) {
         if (koko < 10) {
             this.koko = 10;  // Kartan minimikoko tällä hetkellä 25
@@ -58,7 +75,7 @@ public class LuolaGeneraattori {
     }
 
     /**
-     * Metodi luo luolan kerroksen, kaikki huoneet ja käytävät
+     * Metodi luo luolan kerroksen, kaikki huoneet ja käytävät.
      */
     public void alustaLuola() {
         this.tayttoAste = (this.koko * this.koko) / 3; //Täyttöasteen määritys, vaikuttaa siihen paljonko kartan pinta-alasta täytetään huoneilla.
@@ -222,8 +239,12 @@ public class LuolaGeneraattori {
     }
 
     /**
+     * Arvotun vaihtoehdon perusteella vaihtaa aloituspaikan koordinaatteja
+     * niin, että ne ovat oikealla sivustalla ja lähtevät liikkumaan oikeaan
+     * suuntaan.
      *
-     * @param ehto
+     * @param ehto Huoneen sivu, jolta käytävä aloitetaan 0 = huoneen yläosa 1 =
+     * vasen sivu 2 = oikea sivu 3 = alaosa.
      */
     public void kayVaihtoehdotLapi(int ehto) {
         Random rng = new Random();
@@ -247,6 +268,15 @@ public class LuolaGeneraattori {
         teeKaytava(muutettavaX, muutettavaY, aloitusSuunta);
     }
 
+    /**
+     * Luo käytävän kahden pisteen välille, muuttamalla ensin x tai y
+     * koordinaatit oikeaan kohtaan ja sen jälkeen jäljelle jäävän suunnan.
+     *
+     * @param x Käytävän aloituspaikan x-koordinaatti.
+     * @param y Käytävän aloituspaikan y-koordinaatti.
+     * @param aloitusSuunta Suunta, johon käytävää ensin aletaan luomaan, 0 = y
+     * ja 1 = x;
+     */
     public void teeKaytava(int x, int y, int aloitusSuunta) { // Tehdaan kaytava kahden pisteen valille
         int muutettavaX = x;
         int muutettavaY = y;
@@ -294,6 +324,10 @@ public class LuolaGeneraattori {
 //        System.out.println("Paatetty x: " + muutettavaX + " Paatetty y: " + muutettavaY);
     }
 
+    /**
+     * Sijoittaa paikat, joista pelaaja aloittaa eli alkuPiste ja portaat alas
+     * eli loppuPiste.
+     */
     public void sijoitaAlkuJaLoppu() { //sijoittaa portaat, josta pelaaja tuli luolan tähän kerrokseen
         Random rng = new Random();
         Huone aloitusHuone = this.sijoitetutHuoneet.get(0);

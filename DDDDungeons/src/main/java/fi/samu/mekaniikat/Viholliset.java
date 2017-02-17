@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  * Luokka luo ja sijoittaa hirviöt joita vastaan pelaaja taistelee, sekä
- * tarkistaa osuuko pelaaja niihin ja hoitaa niiden liikkeen
+ * tarkistaa osuuko pelaaja niihin ja hoitaa niiden liikkeen.
  */
 public class Viholliset {
 
@@ -22,6 +22,15 @@ public class Viholliset {
     private int varmistus;
     private int lkm;
 
+    /**
+     * Luo vihollisten esiintymät kerrokseen.
+     *
+     * @param koko Luolan koko.
+     * @param kerros Luolan kerros, mikä määrittää vihollisten vaikeuden.
+     * @param sijoitetutHuoneet Huoneet jotka on sijoitettu, ja joihin
+     * sijoitetaan otuksia.
+     * @param kartta Kartta, johon sijoitetaan otuksia.
+     */
     public Viholliset(int koko, int kerros, ArrayList<Huone> sijoitetutHuoneet, int[][] kartta) {
         this.kartta = kartta;
         this.kerros = kerros;
@@ -29,6 +38,10 @@ public class Viholliset {
         this.koko = koko;
     }
 
+    /**
+     * Luo tietyn kerroksen viholliset. Mitä suurempi kerros, sitä voimakkaampia
+     * vihollisia voi syntyä.
+     */
     public void luoViholliset() {
         viholliset = new ArrayList();
         Random rng = new Random();
@@ -53,6 +66,9 @@ public class Viholliset {
         //System.out.println(varmistus + " =? " + lkm);
     }
 
+    /**
+     * Sijoittaa viholliset kartalle tekstikäyttöliittymää varten.
+     */
     public void sijoitaViholliset() {
         if (viholliset != null) {
             for (Otus otus : viholliset) {
@@ -63,6 +79,15 @@ public class Viholliset {
         }
     }
 
+    /**
+     * Tarkistaa, onko paikassa johon pelaaja haluaa liikkua hirviö ja jos on,
+     * taistelee sitä vastaan.
+     *
+     * @param x Liikkeen x-koordinaatti.
+     * @param y Liikkeen y-koordinaatti.
+     * @return Palauttaa tosi, jos pelaaja on taistellut jotain hirviötä
+     * vastaan.
+     */
     public boolean tarkista(int x, int y) {
         boolean ret = false;
         if (viholliset != null) {
@@ -77,6 +102,13 @@ public class Viholliset {
         return ret;
     }
 
+    /**
+     * Tarkistaa onko paikassa, johon Otus haluaa liikkua jo toinen otus.
+     *
+     * @param x Liikuttava paikan x-koordinaatti.
+     * @param y Liikuttavan paikan y-koordinaatti.
+     * @return Palauttaa true, jos toinen otus on ja ei voida liikkua.
+     */
     public boolean tarkistaOtukset(int x, int y) {
         boolean ret = false;
         if (viholliset != null) {
@@ -90,6 +122,12 @@ public class Viholliset {
         return ret;
     }
 
+    /**
+     * Otukset jotka on määritetty taistelemaan pelaajaa vastaan, taistelevat ja
+     * satuttavat pelaajaa, sekä ottavat vahinkoa.
+     *
+     * @param pelaaja Pelaaja, jota vastaan taistellaan.
+     */
     public void taistele(Pelaaja pelaaja) {
         if (viholliset != null) {
             for (Otus otus : viholliset) {
@@ -109,6 +147,12 @@ public class Viholliset {
         }
     }
 
+    /**
+     * Tarkistaa kaikki otukset joiden hp on vähemmän kuin 1 ja poistaa ne
+     * pelistä, koska ne ovat kuolleet.
+     *
+     * @return Varmistaa onko yhtäkään otusta poistettu.
+     */
     public boolean tarkistaKuoliko() {
         boolean ret = false;
         for (Iterator<Otus> iterator = this.viholliset.iterator(); iterator.hasNext();) {
@@ -123,6 +167,12 @@ public class Viholliset {
         return ret;
     }
 
+    /**
+     * Liikuttaa kaikkia otuksia, joiden vuoro on liikkua.
+     *
+     * @param pelaaja Pelaaja, jotta otukset tietävät voivatko ne liikkua
+     * siihen.
+     */
     public void liikuta(Pelaaja pelaaja) {
         ArrayList<Otus> liikutettavat = new ArrayList();
         for (Otus otus : viholliset) {
@@ -139,6 +189,12 @@ public class Viholliset {
         }
     }
 
+    /**
+     * Liikuttaa otusta pelaajan liikkumisen jälkeen.
+     *
+     * @param otus Otus jota liikutetaan.
+     * @param pelaaja Pelaaja, jotta otus tietää osuuko se pelaajaan.
+     */
     public void liiku(Otus otus, Pelaaja pelaaja) { // 0 = ylos 1 = vasen 2 = oikea 3 = alas
         Koordinaatti otusKoor = otus.getKoordinaatit();
         int x = otusKoor.getX();
@@ -156,48 +212,39 @@ public class Viholliset {
             }
         } else {
             while (true) {
+                int suunta = vaihtoEhdot.get(rng.nextInt(vaihtoEhdot.size()));
+                if (suunta == 0 && y > 0 && kartta[y - 1][x] == 1) {
+                    y--;
+                    if (tarkistaOtukset(x, y)) {
+                        y++;
+                    } else {
+                        break;
+                    }
+                } else if (suunta == 1 && x > 0 && kartta[y][x - 1] == 1) {
+                    x--;
+                    if (tarkistaOtukset(x, y)) {
+                        x++;
+                    } else {
+                        break;
+                    }
+                } else if (suunta == 2 && x < koko - 1 && kartta[y][x + 1] == 1) {
+                    x++;
+                    if (tarkistaOtukset(x, y)) {
+                        x--;
+                    } else {
+                        break;
+                    }
+                } else if (suunta == 3 && y < koko - 1 && kartta[y + 1][x] == 1) {
+                    y++;
+                    if (tarkistaOtukset(x, y)) {
+                        y--;
+                    } else {
+                        break;
+                    }
+                }
+                poistaSuunta(vaihtoEhdot, suunta);
                 if (vaihtoEhdot.isEmpty()) {
                     break;
-                } else {
-                    int suunta = vaihtoEhdot.get(rng.nextInt(vaihtoEhdot.size()));
-                    if (suunta == 0 && y > 0) {
-                        if (kartta[y - 1][x] == 1) {
-                            y--;
-                            if (tarkistaOtukset(x, y)) {
-                                y++;
-                            } else {
-                                break;
-                            }
-                        }
-                    } else if (suunta == 1 && x > 0) {
-                        if (kartta[y][x - 1] == 1) {
-                            x--;
-                            if (tarkistaOtukset(x, y)) {
-                                x++;
-                            } else {
-                                break;
-                            }
-                        }
-                    } else if (suunta == 2 && x < koko - 1) {
-                        if (kartta[y][x + 1] == 1) {
-                            x++;
-                            if (tarkistaOtukset(x, y)) {
-                                x--;
-                            } else {
-                                break;
-                            }
-                        }
-                    } else if (suunta == 3 && y < koko - 1) {
-                        if (kartta[y + 1][x] == 1) {
-                            y++;
-                            if (tarkistaOtukset(x, y)) {
-                                y--;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                    poistaSuunta(vaihtoEhdot, suunta);
                 }
             }
         }
@@ -210,6 +257,13 @@ public class Viholliset {
         }
     }
 
+    /**
+     * Poistaa annetun suunnan vaihtoehdoista, jotta voidaan valita oikea
+     * suunta.
+     *
+     * @param vaihtoEhdot Vaihtoehdot, joihin otus voi liikkua.
+     * @param suunta Poistettava vaihtoehto.
+     */
     public void poistaSuunta(ArrayList<Integer> vaihtoEhdot, int suunta) {
         for (Iterator<Integer> iterator = vaihtoEhdot.iterator(); iterator.hasNext();) {
             int i = iterator.next();
@@ -227,10 +281,13 @@ public class Viholliset {
         return this.varmistus;
     }
 
-    public int getlkm() {
-        return this.varmistus;
+    public int getLkm() {
+        return this.lkm;
     }
 
+    /**
+     * Tulostaa kaikki viholliset, jotka ovat vielä elossa.
+     */
     public void tulostaViholliset() {
         for (Otus otus : viholliset) {
             System.out.println(otus);

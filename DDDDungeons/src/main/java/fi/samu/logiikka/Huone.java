@@ -1,7 +1,7 @@
 package fi.samu.logiikka;
 
 /**
- * Luokka antaa huoneen vasemman yläkulman koordinaatit sekä sen leveyden
+ * Luokka antaa huoneen vasemman yläkulman koordinaatit sekä sen leveyden.
  */
 public class Huone {
 
@@ -10,10 +10,24 @@ public class Huone {
     private int huoneenLeveys;
     private int huoneenPituus;
 
+    /**
+     * Huoneen luominen.
+     *
+     * @param x Huoneen vasemman yläkulman x-koordinaatti.
+     * @param y Huoneen vasemman yläkulman y-koordinaatti.
+     * @param huoneenLeveys Huoneen leveys.
+     */
     public Huone(int x, int y, int huoneenLeveys) {
         luoHuone(x, y, huoneenLeveys);
     }
 
+    /**
+     * Huoneen luonnin metodi, jossa annetaan x- ja y-koordinaateille arvot.
+     *
+     * @param x Huoneen vasemman yläkulman x-koordinaatti.
+     * @param y Huoneen vasemman yläkulman y-koordinaatti.
+     * @param huoneenLeveys Huoneen leveys.
+     */
     public void luoHuone(int x, int y, int huoneenLeveys) {
         if (x < 0) {
             this.x = 0;

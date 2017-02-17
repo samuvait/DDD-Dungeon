@@ -4,7 +4,7 @@ import fi.samu.logiikka.Koordinaatti;
 
 /**
  * Luokka on pelaajan hahmo pelissä ja sisältää taistelemiseen ja liikkumiseen
- * tarvittavat tiedot
+ * tarvittavat tiedot.
  */
 public class Pelaaja {
 
@@ -13,6 +13,12 @@ public class Pelaaja {
     private int attackPower;
     private int experience;
 
+    /**
+     * Luo pelaajan tiettyihin koordinaatteihin.
+     *
+     * @param x Pelaajan x-koordinaatti.
+     * @param y Pelaajan y-koordinaatti.
+     */
     public Pelaaja(int x, int y) {
         koordinaatit = new Koordinaatti(x, y);
         this.hitPoints = 30;
@@ -20,6 +26,11 @@ public class Pelaaja {
         this.experience = 0;
     }
 
+    /**
+     * Muuttaa pelaajan koordinaatit halutuksi.
+     *
+     * @param krdn Halutut koordinaatit.
+     */
     public void setKoordinaatit(Koordinaatti krdn) {
         koordinaatit.setX(krdn.getX());
         koordinaatit.setY(krdn.getY());
@@ -37,6 +48,11 @@ public class Pelaaja {
         this.experience = exp;
     }
 
+    /**
+     * Kasvattaa pelaajan kokemuksen määrää, kun tämä päihittää hirviöitä.
+     *
+     * @param exp Pelaajan kokemuksen määrä.
+     */
     public void growExperience(int exp) {
         this.experience += exp;
     }

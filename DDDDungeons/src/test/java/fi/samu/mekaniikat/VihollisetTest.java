@@ -42,7 +42,7 @@ public class VihollisetTest {
     // public void hello() {}
     @Test
     public void luoOikeanMaaran() {
-        assertEquals(viholliset.getlkm(), viholliset.getVarmistus());
+        assertEquals(viholliset.getLkm(), viholliset.getVarmistus());
     }
 
     @Test
