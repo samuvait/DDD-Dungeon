@@ -16,10 +16,11 @@ Peli sisältää generaattorin joka luo uuden kerroksen aina kun pelaaja menee a
 - Portaita alas meneminen
 - Hirviöiden päihittäminen
 
-##### Luokkakaavio
+#### Luokkakaavio
 
 ![Kuva luokkakaaviosta](/dokumentaatio/Luokkakaavio.png
 )
 
+#### Sekvenssikaavio kerroksen vaihdosta luolassa
 ![Kuva kerroksen vaihdosta](/dokumentaatio/KerroksenVaihto.png
 )
