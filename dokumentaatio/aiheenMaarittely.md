@@ -24,3 +24,7 @@ Peli sisältää generaattorin joka luo uuden kerroksen aina kun pelaaja menee a
 #### Sekvenssikaavio kerroksen vaihdosta luolassa
 ![Kuva kerroksen vaihdosta](/dokumentaatio/KerroksenVaihto.png
 )
+
+#### Sekvenssikaavio uusien otusten luomisesta
+![Kuva kerroksen vaihdosta](/dokumentaatio/uusienOtustenLuonti.png
+)
