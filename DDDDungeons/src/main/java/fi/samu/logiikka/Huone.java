@@ -47,4 +47,9 @@ public class Huone {
     public int getHuoneenPituus() {
         return this.huoneenPituus;
     }
+
+    @Override
+    public String toString() {
+        return ("Huoneen x: " + this.x + " Huoneen y: " + this.y + " leveys: " + this.huoneenLeveys);
+    }
 }

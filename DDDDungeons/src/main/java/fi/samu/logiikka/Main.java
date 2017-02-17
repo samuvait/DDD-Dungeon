@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-//        LuolaGeneraattori lg = new LuolaGeneraattori(15, 3, 4);
+//        LuolaGeneraattori lg = new LuolaGeneraattori();
 //        lg.alustaLuola();
 //        lg.tulostaKartta();
         tekstiKayttoLiittyma();

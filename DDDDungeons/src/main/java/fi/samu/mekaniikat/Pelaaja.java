@@ -36,7 +36,7 @@ public class Pelaaja {
     public void setExperience(int exp) {
         this.experience = exp;
     }
-    
+
     public void growExperience(int exp) {
         this.experience += exp;
     }

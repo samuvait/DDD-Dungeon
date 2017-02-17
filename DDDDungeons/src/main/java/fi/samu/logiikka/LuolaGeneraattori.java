@@ -191,30 +191,43 @@ public class LuolaGeneraattori {
     }
 
     /**
-     *
+     * Käy läpi sijoitettujen käytävien listaa ja sijoittaa käytävän nykyisen ja
+     * seuraavan huoneen välille päivittäen niiden arvoja.
      */
     public void luoKaytavat() { // Luodaan käytävät huoneiden välillä jotta niissä pystyy liikkumaan
         sijoitetutHuoneetPoisto = new ArrayList(sijoitetutHuoneet);
+        seuraavaHuone = new Huone(0, 0, 0);
         if (!sijoitetutHuoneetPoisto.isEmpty()) {
             nykyinenHuone = sijoitetutHuoneetPoisto.remove(sijoitetutHuoneetPoisto.size() - 1); // Otetaan viimeisin huone
+//            System.out.println("sijoitetut huoneet poisto size: " + sijoitetutHuoneetPoisto.size());
             while (!sijoitetutHuoneetPoisto.isEmpty()) { // aloitetaan käymään läpi
-                if (seuraavaHuone != null) { // jos ei vielä määritetty seuraavaa huonetta, eli ensimmäinen kerta
+                if (seuraavaHuone.getHuoneenLeveys() != 0) { // jos ei vielä määritetty seuraavaa huonetta, eli ensimmäinen kerta !!!AIHEUTTI VIAN JOSSA UUDEN KERROKSEN LUONTI EI TOIMI
                     nykyinenHuone = seuraavaHuone; // muutetaan huone johon luotiin käytävä huoneeksi, josta aloitetaan luomaan käytävä
                 }
                 seuraavaHuone = sijoitetutHuoneetPoisto.remove(sijoitetutHuoneetPoisto.size() - 1); // otetaan huone, johon ensimmäisestä luodaan käytävä
-                arvoAloitusPaikat(nykyinenHuone);
+//                System.out.println("sijoitetut huoneet poisto size: " + sijoitetutHuoneetPoisto.size());
+                arvoAloitusPaikat();
             }
         }
     }
 
-    public void arvoAloitusPaikat(Huone huone) { // Arpoo käytävän aloituspaikat
+    /**
+     * Arpoo neljästä vaihtoehdosta käytävän aloituspaikan. 0 = huoneen yläosa 1
+     * = vasen sivu 2 = oikea sivu 3 = alaosa.
+     */
+    public void arvoAloitusPaikat() { // Arpoo käytävän aloituspaikat
         Random rng = new Random();
         int ehto = rng.nextInt(4); // luodaan 4 vaihtoehtoa 0 = huoneen yläosa 1 = vasen sivu 2 = oikea sivu 3 = alaosa
-        kayVaihtoehdotLapi(ehto, huone);
+        kayVaihtoehdotLapi(ehto);
     }
 
-    public void kayVaihtoehdotLapi(int ehto, Huone huone) {
+    /**
+     *
+     * @param ehto
+     */
+    public void kayVaihtoehdotLapi(int ehto) {
         Random rng = new Random();
+        Huone huone = nykyinenHuone;
         int huoneenLeveys = huone.getHuoneenLeveys();
         int muutettavaX = huone.getX() - 1;
         int muutettavaY = huone.getY() - 1;
@@ -241,8 +254,10 @@ public class LuolaGeneraattori {
         kartta[muutettavaY][muutettavaX] = 1;
         Random rng = new Random();
         Huone maaranpaa = this.seuraavaHuone; // otetaan maaranpaaksi seuraava huone
+//        System.out.println("Aloitus x: " + muutettavaX + " Aloitus y: " + muutettavaY);
         int paaX = maaranpaa.getX() + rng.nextInt(maaranpaa.getHuoneenLeveys()); // arvotaan jokin x-koordinaatti johon käytävä liitetään
         int paaY = maaranpaa.getY() + rng.nextInt(maaranpaa.getHuoneenLeveys()); // arvotaan jokin y-koordinaatti johon käytävä liitetään
+//        System.out.println("Lopetus x: " + paaX + " Lopetus y: " + paaY);
         while (true) {
             if (paaX == muutettavaX && paaY == muutettavaY) {
                 this.kaytavienMaara++;
@@ -276,6 +291,7 @@ public class LuolaGeneraattori {
                 }
             }
         }
+//        System.out.println("Paatetty x: " + muutettavaX + " Paatetty y: " + muutettavaY);
     }
 
     public void sijoitaAlkuJaLoppu() { //sijoittaa portaat, josta pelaaja tuli luolan tähän kerrokseen

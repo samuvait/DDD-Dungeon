@@ -26,6 +26,7 @@ public class Viholliset {
         this.kartta = kartta;
         this.kerros = kerros;
         this.sijoitetutHuoneet = new ArrayList(sijoitetutHuoneet);
+        this.koko = koko;
     }
 
     public void luoViholliset() {
@@ -103,21 +104,23 @@ public class Viholliset {
                     pelaaja.setHitPoints(hp);
                     pelaaja.growExperience(20);
                     otus.setTaisteleeko(0);
-                    System.out.println("You have " + hp + " hp left");
                 }
             }
         }
     }
 
-    public void tarkistaKuoliko() {
+    public boolean tarkistaKuoliko() {
+        boolean ret = false;
         for (Iterator<Otus> iterator = this.viholliset.iterator(); iterator.hasNext();) {
             Otus otus = iterator.next();
             if (otus.getHitPoints() < 1) {
                 iterator.remove();
                 kartta[otus.getKoordinaatit().getY()][otus.getKoordinaatit().getX()] = 1;
-                System.out.println("You have defeated a " + otus.getKuvaus() + ".");
+                System.out.println("You have defeated a " + otus.getKuvaus() + "!");
+                ret = true;
             }
         }
+        return ret;
     }
 
     public void liikuta(Pelaaja pelaaja) {
@@ -131,7 +134,7 @@ public class Viholliset {
         }
         for (Iterator<Otus> iterator = liikutettavat.iterator(); iterator.hasNext();) {
             Otus otus = iterator.next();
-            System.out.println(otus.getKuvaus() + " moved");
+//            System.out.println(otus.getKuvaus() + " moved");
             liiku(otus, pelaaja);
         }
     }
@@ -143,15 +146,12 @@ public class Viholliset {
         int pelX = pelaaja.getKoordinaatit().getX();
         int pelY = pelaaja.getKoordinaatit().getY();
         Random rng = new Random();
-        boolean kokeiltuYlos = false;
-        boolean kokeiltuVasen = false;
-        boolean kokeiltuOikea = false;
-        boolean kokeiltuAlas = false;
         ArrayList<Integer> vaihtoEhdot = new ArrayList(asList(0, 1, 2, 3));
         kartta[y][x] = 1; // tekstikäyttöliittymän line
         if (abs(pelX - x) < 2 && abs(pelY - y) < 2) {
             if (otus.voiTaistella(pelX, pelY)) {
                 otus.setTaisteleeko(1);
+                System.out.println("The " + otus.getKuvaus() + " attacks!");
                 this.taistele(pelaaja);
             }
         } else {
@@ -166,7 +166,7 @@ public class Viholliset {
                             if (tarkistaOtukset(x, y)) {
                                 y++;
                             } else {
-                                break; 
+                                break;
                             }
                         }
                     } else if (suunta == 1 && x > 0) {
@@ -175,7 +175,7 @@ public class Viholliset {
                             if (tarkistaOtukset(x, y)) {
                                 x++;
                             } else {
-                                break; 
+                                break;
                             }
                         }
                     } else if (suunta == 2 && x < koko - 1) {
@@ -184,7 +184,7 @@ public class Viholliset {
                             if (tarkistaOtukset(x, y)) {
                                 x--;
                             } else {
-                                break; 
+                                break;
                             }
                         }
                     } else if (suunta == 3 && y < koko - 1) {
@@ -218,7 +218,7 @@ public class Viholliset {
             }
         }
     }
-    
+
     public ArrayList<Otus> getVihollisLista() {
         return this.viholliset;
     }

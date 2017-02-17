@@ -38,7 +38,7 @@ public class Otus {
             this.kuvaus = "rat";
         }
     }
-    
+
     public boolean voiTaistella(int x, int y) {
         boolean ret = false;
         int otusX = this.getKoordinaatit().getX();

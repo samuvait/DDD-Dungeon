@@ -88,7 +88,9 @@ public class Liikkuminen {
             System.out.println("You went down the stairs");
             aloitaLiikkuminen();
         } else {
-            viholliset.tarkistaKuoliko();
+            if (viholliset.tarkistaKuoliko()) {
+                System.out.println("You have " + pelaaja.getHitPoints() + " hp left");
+            }
             kartta[y][x] = 8; // annetaan pelaajalle merkki 8 ; tekstikäyttöliittymän line
             pelaaja.setKoordinaatit(new Koordinaatti(x, y));
             viholliset.liikuta(pelaaja);
