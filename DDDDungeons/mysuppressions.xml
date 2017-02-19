@@ -6,4 +6,6 @@
 
 <suppressions>
     <suppress files="fi.samu.logiikka.Main.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="fi.samu.gui.Kuuntelija.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="fi.samu.gui.RuudukkoUI.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

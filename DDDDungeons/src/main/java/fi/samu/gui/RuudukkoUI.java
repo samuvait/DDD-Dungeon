@@ -10,12 +10,13 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
+
 /**
  *
  * @author Samu
  */
 public class RuudukkoUI extends JFrame {
-    
+
     private int sivunPituus;
     private int[][] kartta;
     private LuolaGeneraattori lg;
@@ -23,9 +24,9 @@ public class RuudukkoUI extends JFrame {
     private Viholliset viholliset;
     private Liikkuminen liikkuminen;
     private JFrame f;
-    
+
     public RuudukkoUI(int sivunPituus) {
-        lg  = new LuolaGeneraattori(25);
+        lg = new LuolaGeneraattori(25);
         liikkuminen = new Liikkuminen(lg);
         viholliset = liikkuminen.getViholliset();
         kartta = lg.getKartta();
@@ -33,12 +34,12 @@ public class RuudukkoUI extends JFrame {
         this.sivunPituus = sivunPituus;
         setResizable(false);
     }
-    
-    private JPanel createGridPanel() {
+
+    private JPanel luoRuudukkoPaneeli() {
         JPanel p = new JPanel(new GridLayout(sivunPituus, sivunPituus));
         for (int i = 0; i < sivunPituus * sivunPituus; i++) {
             JPanel jp = new JPanel();
-            jp.setPreferredSize(new Dimension(35, 35));
+            jp.setPreferredSize(new Dimension(36, 36));
             Border border = BorderFactory.createLineBorder(Color.GRAY);
             jp.setBorder(border);
             list.add(jp);
@@ -47,27 +48,38 @@ public class RuudukkoUI extends JFrame {
         paivita();
         return p;
     }
-    
+
     public void paivita() {
         kartta = lg.getKartta();
         viholliset = liikkuminen.getViholliset();
+        String kerros = "" + liikkuminen.getKerros();
         f.invalidate();
         for (int i = 0; i < sivunPituus; i++) {
             for (int j = 0; j < sivunPituus; j++) {
                 int index = (j * sivunPituus) + i;
                 JPanel pan = list.get(index);
                 pan.removeAll();
-                if (kartta[j][i] == 0) {
+                if (i == 0 && j == 0) {
+                    pan.setBackground(Color.gray);
+                    Font font = new Font("Courier", Font.PLAIN, 8);
+                    JLabel lbl = new JLabel("Floor");
+                    lbl.setFont(font);
+                    lbl.setBorder(BorderFactory.createEmptyBorder(-3 /*top*/, 0, 0, 0));
+                    JLabel krs = new JLabel(kerros);
+                    krs.setVerticalTextPosition(JLabel.BOTTOM);
+                    pan.add(lbl);
+                    pan.add(krs);
+                } else if (kartta[j][i] == 0) {
                     pan.setBackground(Color.black);
                 } else {
                     pan.setBackground(Color.white);
-                    Font font = new Font("Courier", Font.BOLD,10);
-                    Font hpFont = new Font("Courier", Font.PLAIN,8);
+                    Font font = new Font("Courier", Font.BOLD, 10);
+                    Font hpFont = new Font("Courier", Font.PLAIN, 8);
                     Pelaaja p = this.liikkuminen.getPelaaja();
                     if (i == p.getKoordinaatit().getX() && j == p.getKoordinaatit().getY()) {
                         JLabel lbl = new JLabel("@");
                         lbl.setFont(font);
-                        lbl.setBorder(BorderFactory.createEmptyBorder( -3 /*top*/, 0, 0, 0 ));
+                        lbl.setBorder(BorderFactory.createEmptyBorder(-3 /*top*/, 0, 0, 0));
                         JLabel hp = new JLabel(p.getHitPoints() + "/" + p.getHitPointsMax());
                         hp.setFont(hpFont);
                         hp.setVerticalTextPosition(JLabel.BOTTOM);
@@ -77,7 +89,7 @@ public class RuudukkoUI extends JFrame {
                         Otus o = this.viholliset.palautaPiirrettava(i, j);
                         JLabel lbl = new JLabel(o.getTunnus());
                         lbl.setFont(font);
-                        lbl.setBorder(BorderFactory.createEmptyBorder( -3 /*top*/, 0, 0, 0 ));
+                        lbl.setBorder(BorderFactory.createEmptyBorder(-3 /*top*/, 0, 0, 0));
                         JLabel hp = new JLabel(o.getHitPoints() + "/" + o.getHitPointsMax());
                         hp.setFont(hpFont);
                         hp.setVerticalAlignment(JLabel.BOTTOM);
@@ -95,37 +107,12 @@ public class RuudukkoUI extends JFrame {
         f.revalidate();
         f.repaint();
     }
-//    public static void main(String[] args) {
-//        try {
-//            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//        } catch (UnsupportedLookAndFeelException ex) {
-//            ex.printStackTrace();
-//        } catch (IllegalAccessException ex) {
-//            ex.printStackTrace();
-//        } catch (InstantiationException ex) {
-//            ex.printStackTrace();
-//        } catch (ClassNotFoundException ex) {
-//            ex.printStackTrace();
-//        }
-////        /* Turn off metal's use of bold fonts */
-//        UIManager.put("swing.boldMetal", Boolean.FALSE);
-////        
-////        //Schedule a job for the event dispatch thread:
-////        //creating and showing this application's GUI.
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new RuudukkoUI(25).display();
-//            }
-//        });
-//    }
-    
-    public void display() {
+
+    public void nayta() {
 //        //Create and set up the window.
         f = new JFrame("DDD-Dungeon");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(createGridPanel());
+        f.add(luoRuudukkoPaneeli());
         Kuuntelija kuuntelija = new Kuuntelija(this.liikkuminen, this);
         f.addKeyListener(kuuntelija);
 //        //Set up the content pane.
@@ -134,7 +121,7 @@ public class RuudukkoUI extends JFrame {
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }
-    
+
     public Liikkuminen getLiikkuminen() {
         return this.liikkuminen;
     }

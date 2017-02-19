@@ -1,6 +1,5 @@
 package fi.samu.logiikka;
 
-import fi.samu.gui.Peli;
 import fi.samu.gui.RuudukkoUI;
 import fi.samu.mekaniikat.Liikkuminen;
 import java.util.Scanner;
@@ -25,7 +24,7 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                gui.display();
+                gui.nayta();
             }
         });
     }

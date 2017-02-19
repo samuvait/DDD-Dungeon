@@ -128,6 +128,10 @@ public class Liikkuminen {
         return this.viholliset;
     }
     
+    public int getKerros() {
+        return this.kerros;
+    }
+    
     public Pelaaja getPelaaja() {
         return this.pelaaja;
     }
