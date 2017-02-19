@@ -9,7 +9,8 @@ import fi.samu.logiikka.Koordinaatti;
 public class Pelaaja {
 
     private Koordinaatti koordinaatit;
-    private int hitPoints;
+    private int hpCur;
+    private int hpMax;
     private int attackPower;
     private int experience;
 
@@ -21,7 +22,8 @@ public class Pelaaja {
      */
     public Pelaaja(int x, int y) {
         koordinaatit = new Koordinaatti(x, y);
-        this.hitPoints = 30;
+        this.hpCur = 30;
+        this.hpMax = 30;
         this.attackPower = 5;
         this.experience = 0;
     }
@@ -37,7 +39,7 @@ public class Pelaaja {
     }
 
     public void setHitPoints(int hp) {
-        this.hitPoints = hp;
+        this.hpCur = hp;
     }
 
     public void setAttackPower(int ap) {
@@ -62,7 +64,11 @@ public class Pelaaja {
     }
 
     public int getHitPoints() {
-        return this.hitPoints;
+        return this.hpCur;
+    }
+    
+    public int getHitPointsMax() {
+        return this.hpMax;
     }
 
     public int getAttackPower() {

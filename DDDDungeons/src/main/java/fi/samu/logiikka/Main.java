@@ -1,7 +1,11 @@
 package fi.samu.logiikka;
 
+import fi.samu.gui.Peli;
+import fi.samu.gui.RuudukkoUI;
 import fi.samu.mekaniikat.Liikkuminen;
 import java.util.Scanner;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -9,11 +13,21 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 //        LuolaGeneraattori lg = new LuolaGeneraattori();
 //        lg.alustaLuola();
 //        lg.tulostaKartta();
-        tekstiKayttoLiittyma();
+//        tekstiKayttoLiittyma();
+            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        RuudukkoUI gui = new RuudukkoUI(25);
+        UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                gui.display();
+            }
+        });
     }
 
     public static void tekstiKayttoLiittyma() {

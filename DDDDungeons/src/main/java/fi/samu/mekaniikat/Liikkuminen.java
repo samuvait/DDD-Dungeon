@@ -21,6 +21,7 @@ public class Liikkuminen {
     private int[][] kartta;
     private int koko;
     private Viholliset viholliset;
+    private int suunta;
 
     /**
      * Määrittelee luolageneraattorin ja luo pelaajan, sekä aloittaa
@@ -115,6 +116,18 @@ public class Liikkuminen {
         }
     }
 
+    public void setSuunta(int i) {
+        this.suunta = i;
+    }
+    
+    public int getSuunta() {
+        return this.suunta;
+    }
+    
+    public Viholliset getViholliset() {
+        return this.viholliset;
+    }
+    
     public Pelaaja getPelaaja() {
         return this.pelaaja;
     }

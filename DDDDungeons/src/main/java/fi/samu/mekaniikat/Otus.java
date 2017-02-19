@@ -15,6 +15,9 @@ public class Otus {
     private String kuvaus;
     private int liikkuuko;
     private int taisteleeko;
+    private int piirretaanko;
+    private String tunnus;
+    private int hpMax;
 
     /**
      * Antaa luotaessa otuksen koordinaatit, sekä sen tyypin.
@@ -35,14 +38,20 @@ public class Otus {
         koordinaatit = new Koordinaatti(uusiX, uusiY);
         liikkuuko = 0;
         taisteleeko = 0;
+        piirretaanko = 0;
+        this.tyyppi = tyyppi;
         if (tyyppi == 0) {
             this.hitPoints = 5;
+            this.hpMax = 5;
             this.attackPower = 1;
             this.kuvaus = "rat";
+            this.tunnus = " r ";
         } else {
             this.hitPoints = 5;
+            this.hpMax = 5;
             this.attackPower = 1;
             this.kuvaus = "rat";
+            this.tunnus = " r ";
         }
     }
 
@@ -87,6 +96,10 @@ public class Otus {
     public void setLiikkuuko(int liikkuuko) {
         this.liikkuuko = liikkuuko;
     }
+    
+    public void setPiirretaanko(int piir) {
+        this.piirretaanko = piir;
+    }
 
     public int getLiikkuuko() {
         return this.liikkuuko;
@@ -98,6 +111,10 @@ public class Otus {
 
     public int getHitPoints() {
         return this.hitPoints;
+    }
+    
+    public int getHitPointsMax() {
+        return this.hpMax;
     }
 
     public int getAttackPower() {
@@ -111,7 +128,19 @@ public class Otus {
     public String getKuvaus() {
         return this.kuvaus;
     }
-
+    
+    public int getPiirretaanko() {
+        return this.piirretaanko;
+    }
+    
+    public int getTyyppi() {
+        return this.tyyppi;
+    }
+    
+    public String getTunnus() {
+        return this.tunnus;
+    }
+    
     @Override
     public String toString() {
         return ("Otuksen nimi: " + kuvaus + " x: " + this.koordinaatit.getX() + " y: " + this.koordinaatit.getY());

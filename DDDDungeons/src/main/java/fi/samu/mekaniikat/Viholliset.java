@@ -101,6 +101,16 @@ public class Viholliset {
         }
         return ret;
     }
+    
+    public Otus palautaPiirrettava(int x, int y) {
+        Otus uusi = new Otus(0, 0, 1);
+        for (Otus otus : viholliset) {
+            if (otus.getKoordinaatit().getX() == x && otus.getKoordinaatit().getY() == y) {
+                uusi = otus;
+            }
+        }
+        return uusi;
+    }
 
     /**
      * Tarkistaa onko paikassa, johon Otus haluaa liikkua jo toinen otus.
