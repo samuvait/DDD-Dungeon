@@ -64,10 +64,11 @@ public class Liikkuminen {
      * @param suunta Suunta johon pelaaja liikkuu 0 = ylos 1 = vasen 2 = oikea 3
      * = alas
      */
-    public void liiku(int suunta) { // 0 = ylos 1 = vasen 2 = oikea 3 = alas
+    public ArrayList<String> liiku(int suunta) { // 0 = ylos 1 = vasen 2 = oikea 3 = alas
         Koordinaatti pelKoor = pelaaja.getKoordinaatit();
         int x = pelKoor.getX();
         int y = pelKoor.getY();
+        ArrayList<String> tekstit = new ArrayList();
         kartta[y][x] = 1; // tekstikäyttöliittymän line
         if (suunta == 0 && y > 0) {
             if (kartta[y - 1][x] != 0) {
@@ -104,16 +105,18 @@ public class Liikkuminen {
         }
         if (x == this.loppuPaikka.getX() && y == this.loppuPaikka.getY()) {
             kerros++;
-            System.out.println("You went down the stairs");
+            tekstit.add("You go down the stairs");
+            tekstit.add(" ");
             aloitaLiikkuminen();
         } else {
-            if (viholliset.tarkistaKuoliko()) {
-                System.out.println("You have " + pelaaja.getHitPoints() + " hp left");
-            }
+            viholliset.tarkistaKuoliko();
             kartta[y][x] = 8; // annetaan pelaajalle merkki 8 ; tekstikäyttöliittymän line
             pelaaja.setKoordinaatit(new Koordinaatti(x, y));
-            viholliset.liikuta(pelaaja);
+            viholliset.liikuta(this.pelaaja);
+            tekstit = viholliset.getTekstit();
         }
+        viholliset.setTekstit();
+        return tekstit;
     }
 
     public void setSuunta(int i) {

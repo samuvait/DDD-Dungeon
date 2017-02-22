@@ -3,6 +3,7 @@ package fi.samu.gui;
 import fi.samu.mekaniikat.Liikkuminen;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,16 +26,21 @@ public class Kuuntelija implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            liikkuminen.liiku(0);
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            liikkuminen.liiku(1);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            liikkuminen.liiku(2);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            liikkuminen.liiku(3);
+        ArrayList<String> tekstit = new ArrayList();
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+            tekstit = liikkuminen.liiku(0);
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+            tekstit = liikkuminen.liiku(1);
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+            tekstit = liikkuminen.liiku(2);
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+            tekstit = liikkuminen.liiku(3);
         }
-        gui.paivita();
+        gui.paivita(tekstit);
+    }
+    
+    public void setLiikkuminen(Liikkuminen l) {
+        this.liikkuminen = l;
     }
 
     @Override

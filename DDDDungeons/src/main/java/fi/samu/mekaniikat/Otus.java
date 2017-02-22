@@ -43,13 +43,13 @@ public class Otus {
         if (tyyppi == 0) {
             this.hitPoints = 5;
             this.hpMax = 5;
-            this.attackPower = 1;
+            this.attackPower = 2;
             this.kuvaus = "rat";
             this.tunnus = " r ";
         } else {
             this.hitPoints = 5;
             this.hpMax = 5;
-            this.attackPower = 1;
+            this.attackPower = 2;
             this.kuvaus = "rat";
             this.tunnus = " r ";
         }

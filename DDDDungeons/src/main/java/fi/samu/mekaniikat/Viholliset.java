@@ -21,6 +21,7 @@ public class Viholliset {
     private int[][] kartta;
     private int varmistus;
     private int lkm;
+    private ArrayList<String> tekstit;
 
     /**
      * Luo vihollisten esiintymät kerrokseen.
@@ -43,6 +44,7 @@ public class Viholliset {
      * vihollisia voi syntyä.
      */
     public void luoViholliset() {
+        this.tekstit = new ArrayList();
         viholliset = new ArrayList();
         Random rng = new Random();
         this.sijoitetutHuoneet.remove(0);
@@ -152,6 +154,9 @@ public class Viholliset {
                     pelaaja.setHitPoints(hp);
                     pelaaja.growExperience(20);
                     otus.setTaisteleeko(0);
+                    tekstit.add("The " + otus.getKuvaus() + " attacks you for " + otusAP + " damage!");
+                    tekstit.add("You attack the " + otus.getKuvaus() + " for " + ap + " damage!");
+                    tekstit.add(" ");
                 }
             }
         }
@@ -170,7 +175,8 @@ public class Viholliset {
             if (otus.getHitPoints() < 1) {
                 iterator.remove();
                 kartta[otus.getKoordinaatit().getY()][otus.getKoordinaatit().getX()] = 1;
-                System.out.println("You have defeated a " + otus.getKuvaus() + "!");
+                tekstit.add("You defeated a " + otus.getKuvaus() + "!");
+                tekstit.add(" ");
                 ret = true;
             }
         }
@@ -194,8 +200,7 @@ public class Viholliset {
         }
         for (Iterator<Otus> iterator = liikutettavat.iterator(); iterator.hasNext();) {
             Otus otus = iterator.next();
-//            System.out.println(otus.getKuvaus() + " moved");
-            liiku(otus, pelaaja);
+            this.liiku(otus, pelaaja);
         }
     }
 
@@ -213,14 +218,18 @@ public class Viholliset {
         int pelY = pelaaja.getKoordinaatit().getY();
         Random rng = new Random();
         ArrayList<Integer> vaihtoEhdot = new ArrayList(asList(0, 1, 2, 3));
-        kartta[y][x] = 1; // tekstikäyttöliittymän line
+//        kartta[y][x] = 1; // tekstikäyttöliittymän line
+        boolean taisteli = false;
         if (abs(pelX - x) < 2 && abs(pelY - y) < 2) {
             if (otus.voiTaistella(pelX, pelY)) {
                 otus.setTaisteleeko(1);
-                System.out.println("The " + otus.getKuvaus() + " attacks!");
-                this.taistele(pelaaja);
+                tekstit.add("The " + otus.getKuvaus() + " attacks!");
+                tekstit.add(" ");
+                taistele(pelaaja);
+                taisteli = true;
             }
-        } else {
+        }
+        if (!taisteli) {
             while (true) {
                 int suunta = vaihtoEhdot.get(rng.nextInt(vaihtoEhdot.size()));
                 if (suunta == 0 && y > 0 && kartta[y - 1][x] == 1) {
@@ -261,9 +270,15 @@ public class Viholliset {
         if (otus.getHitPoints() < 1) {
             tarkistaKuoliko();
         } else {
-            kartta[y][x] = 6; // tekstikäyttöliittymän line
+//            kartta[y][x] = 6; // tekstikäyttöliittymän line
             otus.setLiikkuuko(0);
             otus.setKoordinaatit(new Koordinaatti(x, y));
+        }
+    }
+    
+    public void lisaaLista(ArrayList<String> alkup, ArrayList<String> lisattava) {
+        for (String s : lisattava) {
+            alkup.add(s);
         }
     }
 
@@ -302,5 +317,13 @@ public class Viholliset {
         for (Otus otus : viholliset) {
             System.out.println(otus);
         }
+    }
+    
+    public ArrayList<String> getTekstit() {
+        return this.tekstit;
+    }
+    
+    public void setTekstit() {
+        this.tekstit = new ArrayList();
     }
 }
