@@ -8,4 +8,5 @@ Päivä | Tunnit | Kuvaus
 10.02.2017 | 6h | Liikkumisen aloittaminen
 17.02.2017 | 6h | Liikkumisen lopettaminen
 19.02.2017 | 6h | GUI hyvälle mallille
+22.02.2017 | 3h | GUI Combal Log lisatty
 ... | ... | ...
