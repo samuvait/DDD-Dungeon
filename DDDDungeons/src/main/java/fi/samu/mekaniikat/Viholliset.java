@@ -156,7 +156,6 @@ public class Viholliset {
                     otus.setTaisteleeko(0);
                     tekstit.add("The " + otus.getKuvaus() + " attacks you for " + otusAP + " damage!");
                     tekstit.add("You attack the " + otus.getKuvaus() + " for " + ap + " damage!");
-                    tekstit.add(" ");
                 }
             }
         }
@@ -176,6 +175,7 @@ public class Viholliset {
                 iterator.remove();
                 kartta[otus.getKoordinaatit().getY()][otus.getKoordinaatit().getX()] = 1;
                 tekstit.add("You defeated a " + otus.getKuvaus() + "!");
+                tekstit.add(" ");
                 tekstit.add(" ");
                 ret = true;
             }
@@ -224,7 +224,6 @@ public class Viholliset {
             if (otus.voiTaistella(pelX, pelY)) {
                 otus.setTaisteleeko(1);
                 tekstit.add("The " + otus.getKuvaus() + " attacks!");
-                tekstit.add(" ");
                 taistele(pelaaja);
                 taisteli = true;
             }

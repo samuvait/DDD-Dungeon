@@ -63,6 +63,7 @@ public class Liikkuminen {
      *
      * @param suunta Suunta johon pelaaja liikkuu 0 = ylos 1 = vasen 2 = oikea 3
      * = alas
+     * @return Palauttaa combat logiin tulostettavien tekstien listan.
      */
     public ArrayList<String> liiku(int suunta) { // 0 = ylos 1 = vasen 2 = oikea 3 = alas
         Koordinaatti pelKoor = pelaaja.getKoordinaatit();
@@ -107,6 +108,7 @@ public class Liikkuminen {
             kerros++;
             tekstit.add("You go down the stairs");
             tekstit.add(" ");
+            tekstit.add(" ");
             aloitaLiikkuminen();
         } else {
             viholliset.tarkistaKuoliko();
@@ -122,19 +124,19 @@ public class Liikkuminen {
     public void setSuunta(int i) {
         this.suunta = i;
     }
-    
+
     public int getSuunta() {
         return this.suunta;
     }
-    
+
     public Viholliset getViholliset() {
         return this.viholliset;
     }
-    
+
     public int getKerros() {
         return this.kerros;
     }
-    
+
     public Pelaaja getPelaaja() {
         return this.pelaaja;
     }

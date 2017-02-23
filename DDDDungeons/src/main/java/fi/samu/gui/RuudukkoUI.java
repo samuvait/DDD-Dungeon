@@ -8,6 +8,8 @@ import fi.samu.mekaniikat.Viholliset;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -15,7 +17,7 @@ import javax.swing.border.Border;
  *
  * @author Samu
  */
-public class RuudukkoUI extends JFrame {
+public class RuudukkoUI implements Runnable {
 
     private int sivunPituus;
     private int[][] kartta;
@@ -262,5 +264,23 @@ public class RuudukkoUI extends JFrame {
             }
             this.paivita(new ArrayList<String>());
         }
+    }
+
+    @Override
+    public void run() {
+        //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RuudukkoUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(RuudukkoUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(RuudukkoUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(RuudukkoUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        nayta();
     }
 }
