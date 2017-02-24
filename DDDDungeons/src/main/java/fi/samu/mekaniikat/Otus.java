@@ -41,38 +41,18 @@ public class Otus {
         piirretaanko = 0;
         this.tyyppi = tyyppi;
         if (tyyppi == 0) {
-            this.hitPoints = 5;
-            this.hpMax = 5;
-            this.attackPower = 2;
-            this.kuvaus = "rat";
-            this.tunnus = " r ";
+            luoOtus(5, 2, "rat", " r ");
         } else {
-            this.hitPoints = 5;
-            this.hpMax = 5;
-            this.attackPower = 2;
-            this.kuvaus = "rat";
-            this.tunnus = " r ";
+            luoOtus(5, 2, "rat", " r ");
         }
     }
-
-    /**
-     * Tarkistaa, voiko otus taistella eli onko se koordinaattien vieressä,
-     * jotka on annettu.
-     *
-     * @param x x-koordinaatti, joka tarkastetaan.
-     * @param y y-koordinaatti, joka tarkastetaan.
-     * @return Jos voi taistella, eli on vieressä, palauttaa tosi.
-     */
-    public boolean voiTaistella(int x, int y) {
-        boolean ret = false;
-        int otusX = this.getKoordinaatit().getX();
-        int otusY = this.getKoordinaatit().getY();
-        if (abs(otusX - x) == 1 && otusY - y == 0) {
-            ret = true;
-        } else if (abs(otusY - y) == 1 && otusX - x == 0) {
-            ret = true;
-        }
-        return ret;
+    
+    public void luoOtus(int hp, int attackPower, String kuvaus, String tunnus) {
+            this.hitPoints = hp;
+            this.hpMax = hp;
+            this.attackPower = attackPower;
+            this.kuvaus = kuvaus;
+            this.tunnus = tunnus;
     }
 
     /**

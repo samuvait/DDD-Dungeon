@@ -22,6 +22,7 @@ public class Liikkuminen {
     private int koko;
     private Viholliset viholliset;
     private int suunta;
+    private Taisteleminen taisto;
 
     /**
      * Määrittelee luolageneraattorin ja luo pelaajan, sekä aloittaa
@@ -53,8 +54,8 @@ public class Liikkuminen {
         ArrayList<Huone> huoneet = lg.getSijoitetutHuoneet();
         viholliset = new Viholliset(koko, this.kerros, huoneet, lg.getKartta());
         viholliset.luoViholliset();
-        viholliset.sijoitaViholliset();
-//        viholliset.tulostaViholliset();
+        taisto = new Taisteleminen(viholliset.getVihollisLista(), kartta);
+        viholliset.setTaistelu(taisto);
     }
 
     /**
@@ -74,32 +75,32 @@ public class Liikkuminen {
         if (suunta == 0 && y > 0) {
             if (kartta[y - 1][x] != 0) {
                 y--;
-                if (viholliset.tarkista(x, y)) {
-                    viholliset.taistele(pelaaja);
+                if (taisto.tarkista(x, y)) {
+                    taisto.taistele(pelaaja);
                     y++;
                 }
             }
         } else if (suunta == 1 && x > 0) {
             if (kartta[y][x - 1] != 0) {
                 x--;
-                if (viholliset.tarkista(x, y)) {
-                    viholliset.taistele(pelaaja);
+                if (taisto.tarkista(x, y)) {
+                    taisto.taistele(pelaaja);
                     x++;
                 }
             }
         } else if (suunta == 2 && x < koko - 1) {
             if (kartta[y][x + 1] != 0) {
                 x++;
-                if (viholliset.tarkista(x, y)) {
-                    viholliset.taistele(pelaaja);
+                if (taisto.tarkista(x, y)) {
+                    taisto.taistele(pelaaja);
                     x--;
                 }
             }
         } else if (suunta == 3 && y < koko - 1) {
             if (kartta[y + 1][x] != 0) {
                 y++;
-                if (viholliset.tarkista(x, y)) {
-                    viholliset.taistele(pelaaja);
+                if (taisto.tarkista(x, y)) {
+                    taisto.taistele(pelaaja);
                     y--;
                 }
             }
@@ -111,13 +112,13 @@ public class Liikkuminen {
             tekstit.add(" ");
             aloitaLiikkuminen();
         } else {
-            viholliset.tarkistaKuoliko();
+            taisto.tarkistaKuoliko();
             kartta[y][x] = 8; // annetaan pelaajalle merkki 8 ; tekstikäyttöliittymän line
             pelaaja.setKoordinaatit(new Koordinaatti(x, y));
             viholliset.liikuta(this.pelaaja);
-            tekstit = viholliset.getTekstit();
+            tekstit = taisto.getTekstit();
         }
-        viholliset.setTekstit();
+        taisto.setTekstit(new ArrayList());
         return tekstit;
     }
 
@@ -139,5 +140,11 @@ public class Liikkuminen {
 
     public Pelaaja getPelaaja() {
         return this.pelaaja;
+    }
+
+    public void lisaaLista(ArrayList<String> alkup, ArrayList<String> lisattava) {
+        for (String s : lisattava) {
+            alkup.add(s);
+        }
     }
 }

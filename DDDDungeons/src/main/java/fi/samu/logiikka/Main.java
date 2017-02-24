@@ -1,9 +1,6 @@
 package fi.samu.logiikka;
 
 import fi.samu.gui.RuudukkoUI;
-import fi.samu.mekaniikat.Liikkuminen;
-import java.util.Scanner;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**

@@ -44,15 +44,4 @@ public class VihollisetTest {
     public void luoOikeanMaaran() {
         assertEquals(viholliset.getLkm(), viholliset.getVarmistus());
     }
-
-    @Test
-    public void tarkistaaOikein() {
-        ArrayList<Otus> vihollisLista = viholliset.getVihollisLista();
-        Otus a = vihollisLista.get(0);
-        boolean oliko = false;
-        if (viholliset.tarkista(a.getKoordinaatit().getX(), a.getKoordinaatit().getY())) {
-            oliko = true;
-        }
-        assertTrue(oliko);
-    }
 }
