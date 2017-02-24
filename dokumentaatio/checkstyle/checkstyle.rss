@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 8,
-             Errors: 2,
+      <title>File: 13,
+             Errors: 0,
              Warnings: 0,
              Infos: 0
       </title>
@@ -74,6 +74,62 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="${project.url}/checkstyle.html#fi.samu.gui.Kuuntelija.java">fi/samu/gui/Kuuntelija.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.samu.gui.RuudukkoUI.java">fi/samu/gui/RuudukkoUI.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.samu.logiikka.Koordinaatti.java">fi/samu/logiikka/Koordinaatti.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.samu.logiikka.Huoneet.java">fi/samu/logiikka/Huoneet.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="${project.url}/checkstyle.html#fi.samu.mekaniikat.Pelaaja.java">fi/samu/mekaniikat/Pelaaja.java</a>
                 </td>
                 <td>
@@ -102,7 +158,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.samu.logiikka.Koordinaatti.java">fi/samu/logiikka/Koordinaatti.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.samu.mekaniikat.Taisteleminen.java">fi/samu/mekaniikat/Taisteleminen.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.samu.logiikka.Kaytavat.java">fi/samu/logiikka/Kaytavat.java</a>
                 </td>
                 <td>
                   0
@@ -125,7 +195,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
               </tr>
                           <tr>
@@ -153,7 +223,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
               </tr>
                       </tbody>

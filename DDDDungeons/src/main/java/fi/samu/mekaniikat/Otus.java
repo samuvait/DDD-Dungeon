@@ -46,13 +46,21 @@ public class Otus {
             luoOtus(5, 2, "rat", " r ");
         }
     }
-    
+
+    /**
+     * Luo uuden otuksen annetuilla parametreillä.
+     *
+     * @param hp Vihollisen elämäpisteet.
+     * @param attackPower Vihollisen hyökkäysvoima.
+     * @param kuvaus Vihollisen kuvaus Combal logia varten.
+     * @param tunnus Vihollisen tunnus guita varten.
+     */
     public void luoOtus(int hp, int attackPower, String kuvaus, String tunnus) {
-            this.hitPoints = hp;
-            this.hpMax = hp;
-            this.attackPower = attackPower;
-            this.kuvaus = kuvaus;
-            this.tunnus = tunnus;
+        this.hitPoints = hp;
+        this.hpMax = hp;
+        this.attackPower = attackPower;
+        this.kuvaus = kuvaus;
+        this.tunnus = tunnus;
     }
 
     /**
@@ -76,7 +84,7 @@ public class Otus {
     public void setLiikkuuko(int liikkuuko) {
         this.liikkuuko = liikkuuko;
     }
-    
+
     public void setPiirretaanko(int piir) {
         this.piirretaanko = piir;
     }
@@ -92,7 +100,7 @@ public class Otus {
     public int getHitPoints() {
         return this.hitPoints;
     }
-    
+
     public int getHitPointsMax() {
         return this.hpMax;
     }
@@ -108,19 +116,19 @@ public class Otus {
     public String getKuvaus() {
         return this.kuvaus;
     }
-    
+
     public int getPiirretaanko() {
         return this.piirretaanko;
     }
-    
+
     public int getTyyppi() {
         return this.tyyppi;
     }
-    
+
     public String getTunnus() {
         return this.tunnus;
     }
-    
+
     @Override
     public String toString() {
         return ("Otuksen nimi: " + kuvaus + " x: " + this.koordinaatit.getX() + " y: " + this.koordinaatit.getY());

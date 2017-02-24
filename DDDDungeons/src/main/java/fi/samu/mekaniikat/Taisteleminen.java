@@ -10,18 +10,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- *
- * @author Samu
+ * Luolassa taistelemiseen tarvittava luokka, joka hoitaa taistelun sekä combat
+ * messaget.
  */
 public class Taisteleminen {
 
     private ArrayList<Otus> viholliset;
     private int[][] kartta;
     private ArrayList<String> tekstit;
+    private int koko;
 
+    /**
+     * Taistelemiseen tarvitaan vihollislista, sekä kartta tarkistamista varten.
+     *
+     * @param viholliset Luolan tässä kerroksessa olevat viholliset.
+     * @param kartta Luolan kartta.
+     */
     public Taisteleminen(ArrayList<Otus> viholliset, int[][] kartta) {
         this.viholliset = viholliset;
         this.kartta = kartta;
+        this.koko = this.kartta.length;
         tekstit = new ArrayList();
     }
 
@@ -75,6 +83,11 @@ public class Taisteleminen {
         }
     }
 
+    /**
+     * Katsoo, mitkä otukset ovat kuolleet eli niiden hp vähemmän kuin 1.
+     *
+     * @return Palauttaa tosi jos yksikään otus on kuollut.
+     */
     public boolean tarkistaKuoliko() {
         boolean ret = false;
         for (Iterator<Otus> iterator = this.viholliset.iterator(); iterator.hasNext();) {
@@ -91,12 +104,23 @@ public class Taisteleminen {
         return ret;
     }
 
+    /**
+     * Katsoo, voiko annettu otus taistella sijaintinsa puolesta pelaajaa
+     * vastaan.
+     *
+     * @param otus Otus joka taistelisi.
+     * @param pelaaja Pelaajan kuvaus.
+     * @return Palauttaa tosi jos voi taistella, epätosi jos ei.
+     */
     public boolean voikoTaistella(Otus otus, Pelaaja pelaaja) {
         boolean ret = false;
         int x = otus.getKoordinaatit().getX();
         int y = otus.getKoordinaatit().getY();
         int pelX = pelaaja.getKoordinaatit().getX();
         int pelY = pelaaja.getKoordinaatit().getY();
+        if (pelX >= koko || pelY >= koko) {
+            return false;
+        }
         if (abs(pelX - x) < 2 && abs(pelY - y) < 2) {
             if (voiTaistella(otus, pelX, pelY)) {
                 otus.setTaisteleeko(1);

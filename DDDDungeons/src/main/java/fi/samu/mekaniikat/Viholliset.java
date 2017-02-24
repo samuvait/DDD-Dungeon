@@ -18,8 +18,8 @@ public class Viholliset {
     private ArrayList<Otus> viholliset;
     private ArrayList<Huone> sijoitetutHuoneet;
     private int[][] kartta;
-    private int varmistus;
-    private int lkm;
+    public int varmistus;
+    public int lkm;
     private Taisteleminen taisto;
     private final int otustenMaara = 1;
 
@@ -67,6 +67,13 @@ public class Viholliset {
         }
     }
 
+    /**
+     * Palauttaa otuksen, joka on kohdassa x ja y.
+     *
+     * @param x Otuksen x-koordinaatti.
+     * @param y Otuksen y-koordinaatti.
+     * @return Palautettava otus.
+     */
     public Otus palautaPiirrettava(int x, int y) {
         Otus uusi = new Otus(0, 0, 1);
         for (Otus otus : viholliset) {
@@ -182,14 +189,6 @@ public class Viholliset {
         return this.viholliset;
     }
 
-    public int getVarmistus() {
-        return this.varmistus;
-    }
-
-    public int getLkm() {
-        return this.lkm;
-    }
-    
     public void setTaistelu(Taisteleminen taistelu) {
         this.taisto = taistelu;
     }

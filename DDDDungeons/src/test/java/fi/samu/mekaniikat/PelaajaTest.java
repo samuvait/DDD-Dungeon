@@ -51,7 +51,56 @@ public class PelaajaTest {
     }
     
     @Test
+    public void asettaaHPOikeinUudestaan() {
+        pelaaja.setHitPoints(25);
+        assertEquals(25, pelaaja.getHitPoints());
+    }
+    
+    @Test
     public void asettaaAPOikein() {
         assertEquals(5, pelaaja.getAttackPower());
+    }
+    
+    @Test
+    public void lisaaHPOikein() {
+        pelaaja.setHitPointsMax(35);
+        assertEquals(35, pelaaja.getHitPointsMax());
+    }
+    
+    @Test
+    public void asettaaAPUudelleen() {
+        pelaaja.setAttackPower(10);
+        assertEquals(10, pelaaja.getAttackPower());
+    }
+    
+    @Test
+    public void kasvattaaXPOikein() {
+        pelaaja.growExperience(20);
+        assertEquals(20, pelaaja.getExperience());
+    }
+    
+    @Test
+    public void asettaaXPOikein() {
+        pelaaja.setExperience(50);
+        assertEquals(50, pelaaja.getExperience());
+    }
+    
+    @Test
+    public void kasvattaaJaVahentaaXPOikein() {
+        pelaaja.growExperience(20);
+        pelaaja.growExperience(-10);
+        assertEquals(10, pelaaja.getExperience());
+    }
+    
+    @Test
+    public void vaihtaaXOikein() {
+        pelaaja.setKoordinaatit(new Koordinaatti(1, pelaaja.getKoordinaatit().getY()));
+        assertEquals(1, pelaaja.getKoordinaatit().getX());
+    }
+    
+    @Test
+    public void vaihtaaYOikein() {
+        pelaaja.setKoordinaatit(new Koordinaatti(pelaaja.getKoordinaatit().getX(), 2));
+        assertEquals(2, pelaaja.getKoordinaatit().getY());
     }
 }

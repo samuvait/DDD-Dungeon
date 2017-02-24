@@ -5,7 +5,9 @@
  */
 package fi.samu.mekaniikat;
 
+import fi.samu.logiikka.Koordinaatti;
 import fi.samu.logiikka.LuolaGeneraattori;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -94,16 +96,11 @@ public class LiikkuminenTest {
 
     @Test
     public void liikuOikeinYlos() {
+        this.kartta[2][2] = 1;
+        this.kartta[1][2] = 1;
+        pelaaja.setKoordinaatit(new Koordinaatti(2, 2));
         liik.liiku(0);
-        if (pY > 0) {
-            if (kartta[pY - 1][pX] != 0) {
-                assertEquals(pY - 1, pelaaja.getKoordinaatit().getY());
-            } else {
-                assertEquals(pY, pelaaja.getKoordinaatit().getY());
-            }
-        } else {
-            assertEquals(pY, 0);
-        }
+        assertEquals(1, pelaaja.getKoordinaatit().getY());
     }
 
     @Test
@@ -118,5 +115,133 @@ public class LiikkuminenTest {
         } else {
             assertEquals(pX, 0);
         }
+    }
+
+    @Test
+    public void liikuOikeinOikealle() {
+        this.kartta[2][2] = 1;
+        this.kartta[2][3] = 1;
+        pelaaja.setKoordinaatit(new Koordinaatti(2, 2));
+        liik.liiku(2);
+        assertEquals(3, pelaaja.getKoordinaatit().getX());
+    }
+
+    @Test
+    public void liikuOikeinAlas() {
+        this.kartta[2][2] = 1;
+        this.kartta[3][2] = 1;
+        pelaaja.setKoordinaatit(new Koordinaatti(2, 2));
+        liik.liiku(3);
+        assertEquals(3, pelaaja.getKoordinaatit().getY());
+    }
+
+    @Test
+    public void liikuOikeinPortaat() {
+        LuolaGeneraattori lg = new LuolaGeneraattori();
+        Liikkuminen liik = new Liikkuminen(lg);
+        Pelaaja pelaaja = liik.getPelaaja();
+        int[][] kartta = lg.getKartta();
+        kartta[5][5] = 1;
+        kartta[5][6] = 1;
+        liik.setLoppu(new Koordinaatti(6, 5));
+        pelaaja.setKoordinaatit(new Koordinaatti(5, 5));
+        ArrayList<String> l = liik.liiku(2);
+        assertTrue(l.get(0).equals("You go down the stairs"));
+    }
+
+    @Test
+    public void jataLiikkumattaOikein() {
+        this.kartta[5][5] = 1;
+        this.kartta[5][4] = 0;
+        liik.setLoppu(new Koordinaatti(5, 6));
+        pelaaja.setKoordinaatit(new Koordinaatti(5, 5));
+        ArrayList<String> l = liik.liiku(1);
+        assertEquals(5, pelaaja.getKoordinaatit().getX());
+    }
+
+    @Test
+    public void taisteleeOikeinVasemmalle() {
+        LuolaGeneraattori lg = new LuolaGeneraattori();
+        Liikkuminen liik = new Liikkuminen(lg);
+        Pelaaja pelaaja = liik.getPelaaja();
+        int[][] kartta = lg.getKartta();
+        int x = 4;
+        int y = 5;
+        kartta[5][5] = 1;
+        kartta[y][x] = 1;
+        pelaaja.setKoordinaatit(new Koordinaatti(5, 5));
+        ArrayList<Otus> vl = new ArrayList();
+        Otus o = new Otus(x, y, 0);
+        vl.add(o);
+        Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
+        liik.setTaisteleminen(taisto);
+        ArrayList<String> l = liik.liiku(1);
+        assertEquals(0, o.getHitPoints());
+    }
+//    
+//    @Test
+//    public void taisteleeOikeinYlos() {
+//        LuolaGeneraattori lg = new LuolaGeneraattori();
+//        Liikkuminen liik = new Liikkuminen(lg);
+//        Pelaaja pelaaja = liik.getPelaaja();
+//        int[][] kartta = lg.getKartta();
+//        int x = 5;
+//        int y = 4;
+//        kartta[5][5] = 1;
+//        kartta[y][x] = 1;
+//        pelaaja.setKoordinaatit(new Koordinaatti(5, 5));
+//        ArrayList<Otus> vl = new ArrayList();
+//        Otus o = new Otus(x, y, 0);
+//        vl.add(o);
+//        Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
+//        liik.setTaisteleminen(taisto);
+//        ArrayList<String> l = liik.liiku(0);
+//        assertEquals(0, o.getHitPoints());
+//    }
+//    
+//    @Test
+//    public void taisteleeOikeinOikealle() {
+//        LuolaGeneraattori lg = new LuolaGeneraattori();
+//        Liikkuminen liik = new Liikkuminen(lg);
+//        Pelaaja pelaaja = liik.getPelaaja();
+//        int[][] kartta = lg.getKartta();
+//        int x = 6;
+//        int y = 5;
+//        kartta[5][5] = 1;
+//        kartta[x][y] = 1;
+//        pelaaja.setKoordinaatit(new Koordinaatti(5, 5));
+//        ArrayList<Otus> vl = new ArrayList();
+//        Otus o = new Otus(x, y, 0);
+//        vl.add(o);
+//        Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
+//        liik.setTaisteleminen(taisto);
+//        ArrayList<String> l = liik.liiku(2);
+//        assertEquals(0, o.getHitPoints());
+//    }
+//    
+//    @Test
+//    public void taisteleeOikeinAlas() {
+//        LuolaGeneraattori lg = new LuolaGeneraattori();
+//        Liikkuminen liik = new Liikkuminen(lg);
+//        Pelaaja pelaaja = liik.getPelaaja();
+//        int[][] kartta = lg.getKartta();
+//        int x = 5;
+//        int y = 6;
+//        kartta[5][5] = 1;
+//        kartta[x][y] = 1;
+//        pelaaja.setKoordinaatit(new Koordinaatti(5, 5));
+//        ArrayList<Otus> vl = new ArrayList();
+//        Otus o = new Otus(x, y, 0);
+//        vl.add(o);
+//        Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
+//        liik.setTaisteleminen(taisto);
+//        ArrayList<String> l = liik.liiku(3);
+//        assertEquals(0, o.getHitPoints());
+//    }
+    
+    @Test
+    public void asettaaSuunnan() {
+        liik.setSuunta(2);
+        assertEquals(2, liik.getSuunta());
     }
 }

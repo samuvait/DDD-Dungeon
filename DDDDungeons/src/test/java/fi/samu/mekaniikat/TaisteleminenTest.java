@@ -63,10 +63,8 @@ public class TaisteleminenTest {
         Pelaaja pelaaja = new Pelaaja(1, 2);
         int x = 2;
         int y = 2;
-        Random rng = new Random();
         ArrayList<Otus> vl = new ArrayList();
         Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
-        boolean oliko = true;
         vl.add(new Otus(x, y, 0));
         taisto.tarkista(x, y);
         taisto.taistele(pelaaja);
@@ -78,11 +76,9 @@ public class TaisteleminenTest {
         Pelaaja pelaaja = new Pelaaja(1, 2);
         int x = 2;
         int y = 2;
-        Random rng = new Random();
         ArrayList<Otus> vl = new ArrayList();
         Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
         taisto.setTekstit(new ArrayList());
-        boolean oliko = true;
         Otus rat = new Otus(x, y, 0);
         vl.add(rat);
         taisto.tarkista(x, y);
@@ -95,11 +91,9 @@ public class TaisteleminenTest {
         Pelaaja pelaaja = new Pelaaja(1, 2);
         int x = 2;
         int y = 2;
-        Random rng = new Random();
         ArrayList<Otus> vl = new ArrayList();
         Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
         taisto.setTekstit(new ArrayList());
-        boolean oliko = true;
         Otus rat = new Otus(x, y, 0);
         vl.add(rat);
         taisto.tarkista(x, y);
@@ -136,11 +130,9 @@ public class TaisteleminenTest {
         Pelaaja pelaaja = new Pelaaja(1, 2);
         int x = 2;
         int y = 2;
-        Random rng = new Random();
         ArrayList<Otus> vl = new ArrayList();
         Taisteleminen taisto = new Taisteleminen(vl, lg.getKartta());
         taisto.setTekstit(new ArrayList());
-        boolean oliko = true;
         Otus rat = new Otus(x, y, 0);
         assertTrue(taisto.voiTaistella(rat, pelaaja.getKoordinaatit().getX(), pelaaja.getKoordinaatit().getY()));
     }

@@ -125,6 +125,14 @@ public class Liikkuminen {
     public void setSuunta(int i) {
         this.suunta = i;
     }
+    
+    public void setLoppu(Koordinaatti k) {
+        this.loppuPaikka = k;
+    }
+    
+    public void setTaisteleminen(Taisteleminen taisteleminen) {
+        this.taisto = taisteleminen;
+    }
 
     public int getSuunta() {
         return this.suunta;
@@ -140,11 +148,5 @@ public class Liikkuminen {
 
     public Pelaaja getPelaaja() {
         return this.pelaaja;
-    }
-
-    public void lisaaLista(ArrayList<String> alkup, ArrayList<String> lisattava) {
-        for (String s : lisattava) {
-            alkup.add(s);
-        }
     }
 }
