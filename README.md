@@ -7,6 +7,8 @@ Pelissä on tarkoitus päihittää hirviötä ja edetä alemmas ja alemmas luola
 ### Dokumentaatio
 [Aiheen kuvaus](dokumentaatio/aiheenMaarittely.md)
 
+[Käyttöohjeet](dokumentaatio/kayttoohje.md)
+
 [Tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
 
 ### Raportit
