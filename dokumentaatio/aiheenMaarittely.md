@@ -1,4 +1,4 @@
-### Pelin aiheen määrittely
+## Pelin aiheen määrittely
 
 
 
@@ -15,6 +15,10 @@ Peli sisältää generaattorin joka luo uuden kerroksen aina kun pelaaja menee a
 - Liikkuminen
 - Portaita alas meneminen
 - Hirviöiden päihittäminen
+
+
+### Rakennekuvaus:
+LuolaGeneraattori luo luolan kerroksen Kaytavat ja Huoneet luokkien avulla. Liikkuminen aloittaa liikkumisen ja luo jokaiselle kerrokselle uudet Taisteleminen ja Viholliset luokat, jotka hoitavat vihollisten luonnin, sekä taistelemisen pelaajan ja vihollisten välillä. RuudukkoUI näyttää pelin kartan ja päivittää sitä pelaajan siirtojen mukaisesti, joita Kuuntelija kuuntelee.
 
 #### Luokkakaavio
 
