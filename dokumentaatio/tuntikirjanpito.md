@@ -11,4 +11,5 @@ Päivä | Tunnit | Kuvaus
 22.02.2017 | 3h | GUI Combal Log lisatty
 23.02.2017 | 1.5h | Testauksen parantelu
 24.02.2017 | 3h | Lisaa luokkia ja testausta
+01.03.2017 | 2h | Vihollisia ja loppu lisatty
 ... | ... | ...
