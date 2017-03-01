@@ -2,6 +2,7 @@ package fi.samu.mekaniikat;
 
 import fi.samu.logiikka.Koordinaatti;
 import static java.lang.Math.abs;
+import java.util.Random;
 
 /**
  * Luokka kuvaa hirviöitä, joita vastaan pelaaja taistelee.
@@ -18,6 +19,7 @@ public class Otus {
     private int piirretaanko;
     private String tunnus;
     private int hpMax;
+    private int xpBonus;
 
     /**
      * Antaa luotaessa otuksen koordinaatit, sekä sen tyypin.
@@ -36,12 +38,39 @@ public class Otus {
             uusiY = 0;
         }
         koordinaatit = new Koordinaatti(uusiX, uusiY);
-        liikkuuko = 0;
+        liikkuuko = new Random().nextInt(2);
         taisteleeko = 0;
         piirretaanko = 0;
         this.tyyppi = tyyppi;
+        this.xpBonus = tyyppi * 3;
         if (tyyppi == 0) {
-            luoOtus(5, 2, "rat", " r ");
+            luoOtus(5, 2, "rat", "  r  ");
+        } else if (tyyppi == 1) {
+            luoOtus(8, 2, "giant spider", "}X{");
+        } else if (tyyppi == 2) {
+            luoOtus(9, 3, "zombie", " Z ");
+        } else if (tyyppi == 3) {
+            luoOtus(10, 4, "skeleton", " S ");
+        } else if (tyyppi == 4) {
+            luoOtus(13, 3, "orc", "  o  ");
+        } else if (tyyppi == 5) {
+            luoOtus(15, 5, "giant mantis", "\\Y/");
+        } else if (tyyppi == 6) {
+            luoOtus(17, 5, "ogre", " O ");
+        } else if (tyyppi == 7) {
+            luoOtus(20, 5, "werewolf", " W ");
+        } else if (tyyppi == 8) {
+            luoOtus(30, 3, "gargoyle", " M ");
+        } else if (tyyppi == 9) {
+            luoOtus(40, 10, "small giant", "  g  ");
+        } else if (tyyppi == 10) {
+            luoOtus(32, 7, "fire elemental", "<^<");
+        } else if (tyyppi == 11) {
+            luoOtus(45, 10, "minotaur", " M ");
+        } else if (tyyppi == 12) {
+            luoOtus(50, 12, "rock giant", " G ");
+        } else if (tyyppi == 13) {
+            luoOtus(100, 15, "red dragon", " D ");
         } else {
             luoOtus(5, 2, "rat", " r ");
         }
@@ -103,6 +132,10 @@ public class Otus {
 
     public int getHitPointsMax() {
         return this.hpMax;
+    }
+
+    public int getXpBonus() {
+        return this.xpBonus;
     }
 
     public int getAttackPower() {

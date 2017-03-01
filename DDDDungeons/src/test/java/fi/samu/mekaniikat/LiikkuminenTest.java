@@ -146,7 +146,7 @@ public class LiikkuminenTest {
         liik.setLoppu(new Koordinaatti(6, 5));
         pelaaja.setKoordinaatit(new Koordinaatti(5, 5));
         ArrayList<String> l = liik.liiku(2);
-        assertTrue(l.get(0).equals("You go down the stairs"));
+        assertTrue(l.get(2).equals("You go down the stairs"));
     }
 
     @Test
@@ -238,7 +238,7 @@ public class LiikkuminenTest {
 //        ArrayList<String> l = liik.liiku(3);
 //        assertEquals(0, o.getHitPoints());
 //    }
-    
+
     @Test
     public void asettaaSuunnan() {
         liik.setSuunta(2);

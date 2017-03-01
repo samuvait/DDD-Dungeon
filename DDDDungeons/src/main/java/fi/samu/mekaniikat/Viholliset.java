@@ -21,7 +21,7 @@ public class Viholliset {
     public int varmistus;
     public int lkm;
     private Taisteleminen taisto;
-    private final int otustenMaara = 1;
+    private final int otustenMaara = 14;
 
     /**
      * Luo vihollisten esiintymät kerrokseen.
@@ -49,9 +49,9 @@ public class Viholliset {
         this.sijoitetutHuoneet.remove(0);
         varmistus = sijoitetutHuoneet.size();
         lkm = 0;
-        int tyyppiMax = kerros;
+        int tyyppiMax = 1 + kerros / 2;
         if (tyyppiMax > otustenMaara) {
-            tyyppiMax = 1;
+            tyyppiMax = otustenMaara;
         }
         for (int i = 0; i < sijoitetutHuoneet.size(); i++) {
             Huone otuksenHuone = sijoitetutHuoneet.get(i);

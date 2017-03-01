@@ -72,44 +72,20 @@ public class Liikkuminen {
         int y = pelKoor.getY();
         ArrayList<String> tekstit = new ArrayList();
         kartta[y][x] = 1; // tekstikäyttöliittymän line
-        if (suunta == 0 && y > 0) {
-            if (kartta[y - 1][x] != 0) {
-                y--;
-                if (taisto.tarkista(x, y)) {
-                    taisto.taistele(pelaaja);
-                    y++;
-                }
-            }
-        } else if (suunta == 1 && x > 0) {
-            if (kartta[y][x - 1] != 0) {
-                x--;
-                if (taisto.tarkista(x, y)) {
-                    taisto.taistele(pelaaja);
-                    x++;
-                }
-            }
-        } else if (suunta == 2 && x < koko - 1) {
-            if (kartta[y][x + 1] != 0) {
-                x++;
-                if (taisto.tarkista(x, y)) {
-                    taisto.taistele(pelaaja);
-                    x--;
-                }
-            }
-        } else if (suunta == 3 && y < koko - 1) {
-            if (kartta[y + 1][x] != 0) {
-                y++;
-                if (taisto.tarkista(x, y)) {
-                    taisto.taistele(pelaaja);
-                    y--;
-                }
-            }
+        if (suunta == 0 && y > 0 && kartta[y - 1][x] != 0) {
+            y = tarkistaLiike(x, y, true, -1, tekstit);
+        } else if (suunta == 1 && x > 0 && kartta[y][x - 1] != 0) {
+            x = tarkistaLiike(y, x, false, -1, tekstit);
+        } else if (suunta == 2 && x < koko - 1 && kartta[y][x + 1] != 0) {
+            x = tarkistaLiike(y, x, false, 1, tekstit);
+        } else if (suunta == 3 && y < koko - 1 && kartta[y + 1][x] != 0) {
+            y = tarkistaLiike(x, y, true, 1, tekstit);
         }
         if (x == this.loppuPaikka.getX() && y == this.loppuPaikka.getY()) {
             kerros++;
+            tekstit.add(" ");
+            tekstit.add(" ");
             tekstit.add("You go down the stairs");
-            tekstit.add(" ");
-            tekstit.add(" ");
             aloitaLiikkuminen();
         } else {
             taisto.tarkistaKuoliko();
@@ -122,14 +98,41 @@ public class Liikkuminen {
         return tekstit;
     }
 
+    public int tarkistaLiike(int muuttumaton, int koordinaatti, boolean onY, int muutos, ArrayList<String> tekstit) {
+        int x = 0;
+        int y = 0;
+        int k = koordinaatti;
+        k += muutos;
+        if (onY) {
+            x = muuttumaton;
+            y = k;
+        } else if (!onY) {
+            x = k;
+            y = muuttumaton;
+        }
+        if (taisto.tarkista(x, y)) {
+            tekstit.add(" ");
+            tekstit.add(" ");
+            taisto.taistele(pelaaja);
+            k -= muutos;
+        }
+        return k;
+    }
+
+//    public ArrayList<String> yhdistaListat(ArrayList<String> palautettava, ArrayList<String> lisattava) {
+//        for (String s : lisattava) {
+//            palautettava.add(s);
+//        }
+//        return palautettava;
+//    }
     public void setSuunta(int i) {
         this.suunta = i;
     }
-    
+
     public void setLoppu(Koordinaatti k) {
         this.loppuPaikka = k;
     }
-    
+
     public void setTaisteleminen(Taisteleminen taisteleminen) {
         this.taisto = taisteleminen;
     }

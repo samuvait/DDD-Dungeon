@@ -19,6 +19,9 @@ public class Taisteleminen {
     private int[][] kartta;
     private ArrayList<String> tekstit;
     private int koko;
+    private boolean parillinen;
+    private boolean otusHyokkaa;
+    private Pelaaja pelaaja;
 
     /**
      * Taistelemiseen tarvitaan vihollislista, sekä kartta tarkistamista varten.
@@ -31,6 +34,8 @@ public class Taisteleminen {
         this.kartta = kartta;
         this.koko = this.kartta.length;
         tekstit = new ArrayList();
+        this.parillinen = false;
+        this.otusHyokkaa = false;
     }
 
     /**
@@ -63,6 +68,7 @@ public class Taisteleminen {
      * @param pelaaja Pelaaja, jota vastaan taistellaan.
      */
     public void taistele(Pelaaja pelaaja) {
+        this.pelaaja = pelaaja;
         if (viholliset != null) {
             for (Otus otus : viholliset) {
                 if (otus.getTaisteleeko() == 1) {
@@ -74,10 +80,20 @@ public class Taisteleminen {
                     otusHP -= ap;
                     otus.setHitPoints(otusHP);
                     pelaaja.setHitPoints(hp);
-                    pelaaja.growExperience(20);
                     otus.setTaisteleeko(0);
+                    if (!otusHyokkaa && this.parillinen) {
+                        tekstit.add(" ");
+                        tekstit.add(" ");
+                        tekstit.add(" ");
+                        parillinen = false;
+                    } else if (!otusHyokkaa && !parillinen) {
+                        parillinen = true;
+                        tekstit.add(" ");
+                        tekstit.add(" ");
+                    }
                     tekstit.add("The " + otus.getKuvaus() + " attacks you for " + otusAP + " damage!");
                     tekstit.add("You attack the " + otus.getKuvaus() + " for " + ap + " damage!");
+                    this.otusHyokkaa = false;
                 }
             }
         }
@@ -95,9 +111,8 @@ public class Taisteleminen {
             if (otus.getHitPoints() < 1) {
                 iterator.remove();
                 kartta[otus.getKoordinaatit().getY()][otus.getKoordinaatit().getX()] = 1;
+                pelaaja.growExperience(20 + otus.getXpBonus());
                 tekstit.add("You defeated a " + otus.getKuvaus() + "!");
-                tekstit.add(" ");
-                tekstit.add(" ");
                 ret = true;
             }
         }
@@ -124,7 +139,17 @@ public class Taisteleminen {
         if (abs(pelX - x) < 2 && abs(pelY - y) < 2) {
             if (voiTaistella(otus, pelX, pelY)) {
                 otus.setTaisteleeko(1);
+                if (this.parillinen) {
+                    tekstit.add(" ");
+                    parillinen = false;
+                } else if (!parillinen) {
+                    parillinen = true;
+                }
+                tekstit.add(" ");
+                tekstit.add(" ");
                 tekstit.add("The " + otus.getKuvaus() + " attacks!");
+                tekstit.add(" ");
+                this.otusHyokkaa = true;
                 taistele(pelaaja);
                 ret = true;
             }

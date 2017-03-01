@@ -44,32 +44,32 @@ public class VihollisetTest {
     public void luoOikeanMaaran() {
         assertEquals(viholliset.lkm, viholliset.varmistus);
     }
-    
+
     @Test
     public void luoOikeatHirviot() {
         boolean oliko = true;
         for (Otus o : viholliset.getVihollisLista()) {
-            if (o.getTunnus() != " r ") {
+            if (!(o.getTunnus().matches("\\s+[rZSoOWMgGD]\\s+") || o.getTunnus().equals("}X{") || o.getTunnus().equals("\\Y/") || o.getTunnus().equals("<^<"))) {
                 oliko = false;
                 break;
             }
         }
         assertTrue(oliko);
     }
-    
+
     @Test
     public void palauttaaPiirrettavan() {
         Otus o = viholliset.getVihollisLista().get(0);
         Otus b = viholliset.palautaPiirrettava(o.getKoordinaatit().getX(), o.getKoordinaatit().getY());
         assertEquals(o, b);
     }
-    
+
     @Test
     public void tarkistaaOikein() {
         Otus o = viholliset.getVihollisLista().get(0);
         assertTrue(viholliset.tarkistaOtukset(o.getKoordinaatit().getX(), o.getKoordinaatit().getY()));
     }
-    
+
     @Test
     public void liikuttaaOikein() {
         Taisteleminen taisto = new Taisteleminen(viholliset.getVihollisLista(), kartta);
@@ -82,7 +82,7 @@ public class VihollisetTest {
         viholliset.liikuta(pelaaja);
         assertTrue(!viholliset.tarkistaOtukset(x, y));
     }
-    
+
     @Test
     public void liikuttaaOtusOikein() {
         Taisteleminen taisto = new Taisteleminen(viholliset.getVihollisLista(), kartta);

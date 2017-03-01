@@ -30,6 +30,8 @@ public class RuudukkoUI implements Runnable {
     private JPanel combatLog;
     private ArrayList<JLabel> lblLista;
     private int dmn;
+    private int rivienMaara = 45;
+    private int nykyinenKerros;
 
     public RuudukkoUI(int sivunPituus) {
         lg = new LuolaGeneraattori(sivunPituus);
@@ -38,23 +40,9 @@ public class RuudukkoUI implements Runnable {
         kartta = lg.getKartta();
         this.sivunPituus = sivunPituus;
         this.dmn = 30;
+        nykyinenKerros = liikkuminen.getKerros() - 1;
     }
 
-    private JPanel luoRuudukkoPaneeli() {
-        this.list = new ArrayList();
-        JPanel p = new JPanel(new GridLayout(sivunPituus, sivunPituus));
-        for (int i = 0; i < sivunPituus * sivunPituus; i++) {
-            JPanel jp = new JPanel();
-            jp.setPreferredSize(new Dimension(dmn, dmn));
-            Border border = BorderFactory.createLineBorder(Color.GRAY);
-            jp.setBorder(border);
-            list.add(jp);
-            p.add(jp);
-        }
-        paivita(new ArrayList<String>());
-        return p;
-    }
-    
     private JPanel luoRuudukkoBagPaneeli() {
         this.list = new ArrayList();
         JPanel p = new JPanel(new GridBagLayout());
@@ -73,7 +61,7 @@ public class RuudukkoUI implements Runnable {
         }
         JPanel jp = new JPanel();
         jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
-        jp.setPreferredSize(new Dimension(200, dmn * sivunPituus));
+        jp.setPreferredSize(new Dimension(300, dmn * sivunPituus));
         GridBagConstraints c = new GridBagConstraints();
 //        c.fill = GridBagConstraints.BOTH;
 //        c.weightx = 5;
@@ -87,11 +75,11 @@ public class RuudukkoUI implements Runnable {
         paivita(new ArrayList<String>());
         return p;
     }
-    
+
     public void lisaaLabelit() {
         this.combatLog.removeAll();
         this.lblLista = new ArrayList();
-        for (int i = 0; i < 47; i ++) {
+        for (int i = 0; i <= rivienMaara; i++) {
             JLabel lbl = new JLabel(" ");
             this.combatLog.add(lbl);
             lblLista.add(lbl);
@@ -99,16 +87,16 @@ public class RuudukkoUI implements Runnable {
         combatLog.revalidate();
         combatLog.repaint();
     }
-    
+
     public void MuutaLabelit(ArrayList<String> tekstit) {
         ArrayList<String> muutettavat = new ArrayList<String>();
-        for (int i = 46; i >= 0; i--) {
+        for (int i = rivienMaara; i >= 0; i--) {
             JLabel lbl = lblLista.get(i);
             String muut = lbl.getText();
             muutettavat.add(muut);
         }
         int i = tekstit.size() - 1;
-        int h = 46;
+        int h = rivienMaara;
         while (i >= 0 && h >= 0) {
             String s = tekstit.get(i);
             JLabel lbl = lblLista.get(h);
@@ -127,6 +115,7 @@ public class RuudukkoUI implements Runnable {
     }
 
     public void paivita(ArrayList<String> tekstit) {
+        int uusiKerros = liikkuminen.getKerros();
         kartta = lg.getKartta();
         viholliset = liikkuminen.getViholliset();
         String kerros = "" + liikkuminen.getKerros();
@@ -138,37 +127,47 @@ public class RuudukkoUI implements Runnable {
                 pan.removeAll();
                 if (i == 0 && j == 0) {
                     pan.setBackground(Color.gray);
-                    Font font = new Font("Courier", Font.PLAIN, 8);
+                    Font font = new Font("Terminus", Font.PLAIN, 8);
                     JLabel lbl = new JLabel("Floor");
                     lbl.setFont(font);
-                    lbl.setBorder(BorderFactory.createEmptyBorder(-3 /*top*/, 0, 0, 0));
+                    lbl.setBorder(BorderFactory.createEmptyBorder(-2 /*top*/, 0, 0, 0));
                     JLabel krs = new JLabel(kerros);
                     krs.setVerticalTextPosition(JLabel.BOTTOM);
-                    Font f = new Font("Courier", Font.PLAIN, 10);
+                    Font f = new Font("Terminus", Font.PLAIN, 10);
                     krs.setFont(f);
                     pan.add(lbl);
                     pan.add(krs);
                 } else if (kartta[j][i] == 0) {
                     pan.setBackground(Color.black);
                 } else {
-                    pan.setBackground(Color.white);
-                    Font font = new Font("Courier", Font.BOLD, 8);
-                    Font hpFont = new Font("Courier", Font.PLAIN, 8);
+                    Font font = new Font("Terminus", Font.BOLD, 8);
+                    Font hpFont = new Font("Terminus", Font.PLAIN, 8);
                     Pelaaja p = this.liikkuminen.getPelaaja();
                     if (i == p.getKoordinaatit().getX() && j == p.getKoordinaatit().getY()) {
                         JLabel lbl = new JLabel("@");
                         lbl.setFont(font);
-                        lbl.setBorder(BorderFactory.createEmptyBorder(-3 /*top*/, 0, 0, 0));
+                        lbl.setBorder(BorderFactory.createEmptyBorder(-2 /*top*/, 0, 0, 0));
+                        if (this.nykyinenKerros < uusiKerros) {
+                            pan.setBackground(Color.YELLOW);
+                            this.nykyinenKerros = uusiKerros;
+                        } else {
+                            pan.setBackground(Color.white);
+                        }
                         JLabel hp = new JLabel(p.getHitPoints() + "/" + p.getHitPointsMax());
                         hp.setFont(hpFont);
                         hp.setVerticalTextPosition(JLabel.BOTTOM);
                         pan.add(lbl);
                         pan.add(hp);
                     } else if (this.viholliset.tarkistaOtukset(i, j)) {
+                        pan.setBackground(Color.white);
                         Otus o = this.viholliset.palautaPiirrettava(i, j);
                         JLabel lbl = new JLabel(o.getTunnus());
                         lbl.setFont(font);
-                        lbl.setBorder(BorderFactory.createEmptyBorder(-3 /*top*/, 0, 0, 0));
+                        if (o.getTunnus().equals(" D ")) {
+                            lbl.setForeground(Color.RED);
+                            hpFont = new Font("Terminus", Font.PLAIN, 6);
+                        }
+                        lbl.setBorder(BorderFactory.createEmptyBorder(-2 /*top*/, 0, 0, 0));
                         JLabel hp = new JLabel(o.getHitPoints() + "/" + o.getHitPointsMax());
                         hp.setFont(hpFont);
                         hp.setVerticalAlignment(JLabel.BOTTOM);
@@ -176,8 +175,11 @@ public class RuudukkoUI implements Runnable {
                         pan.add(hp);
                     } else {
                         if (kartta[j][i] == 5) {
+                            pan.setBackground(Color.white);
                             JLabel lbl = new JLabel("%");
                             pan.add(lbl);
+                        } else {
+                            pan.setBackground(Color.white);
                         }
                     }
                 }
@@ -190,7 +192,7 @@ public class RuudukkoUI implements Runnable {
         f.repaint();
         this.kuoliko();
         this.lvlUp();
-        
+        this.pelinLoppu();
     }
 
     public void nayta() {
@@ -208,7 +210,7 @@ public class RuudukkoUI implements Runnable {
     public Liikkuminen getLiikkuminen() {
         return this.liikkuminen;
     }
-    
+
     public void kuoliko() {
         Object[] vaihtoEhdot = {
             "Restart",
@@ -227,17 +229,51 @@ public class RuudukkoUI implements Runnable {
                 this.lisaaLabelit();
                 this.paivita(new ArrayList<String>());
             } else {
-               f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
+                f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
             }
-       }
+        }
     }
     
+    private void pelinLoppu() {
+        Object[] vaihtoEhdot = {
+            "Restart",
+            "Retire"
+        };
+        Pelaaja p = this.liikkuminen.getPelaaja();
+        if (this.liikkuminen.getKerros() == 50) {
+            f.invalidate();
+            for (int i = 0; i < sivunPituus; i++) {
+                for (int j = 0; j < sivunPituus; j++) {
+                    int index = (j * sivunPituus) + i;
+                    JPanel pan = list.get(index);
+                    pan.removeAll();
+                    pan.setBackground(Color.WHITE);
+                }
+            }
+            f.revalidate();
+            f.repaint();
+            int reply = JOptionPane.showOptionDialog(f, "You descended 50 floors and won the game! Do you want to restart or retire as a winner?", "Victory", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, vaihtoEhdot, vaihtoEhdot[0]);
+            if (reply == 0) {
+                lg = new LuolaGeneraattori(sivunPituus);
+                liikkuminen = new Liikkuminen(lg);
+                viholliset = liikkuminen.getViholliset();
+                kartta = lg.getKartta();
+                k.setLiikkuminen(liikkuminen);
+                this.tyhjennaLogi();
+                this.lisaaLabelit();
+                this.paivita(new ArrayList<String>());
+            } else {
+                f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
+            }
+        }
+    }
+
     public void tyhjennaLogi() {
         for (JLabel lbl : this.lblLista) {
             lbl.setText("");
         }
     }
-    
+
     public void lvlUp() {
         Pelaaja p = this.liikkuminen.getPelaaja();
         if (p.getExperience() > 99) {
