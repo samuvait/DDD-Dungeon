@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import javax.swing.border.Border;
 
 /**
@@ -78,8 +79,15 @@ public class RuudukkoUI implements Runnable {
 
     public void lisaaLabelit() {
         this.combatLog.removeAll();
+        JLabel otsikko = new JLabel();
+        otsikko.setText("Combat Log");
+        Font font = new Font("Terminus", Font.BOLD, 12);
+        otsikko.setFont(font);
+        this.combatLog.add(new JLabel(" "));
+        this.combatLog.add(otsikko);
+        this.combatLog.add(new JLabel(" "));
         this.lblLista = new ArrayList();
-        for (int i = 0; i <= rivienMaara; i++) {
+        for (int i = 0; i <= rivienMaara - 3; i++) {
             JLabel lbl = new JLabel(" ");
             this.combatLog.add(lbl);
             lblLista.add(lbl);
@@ -90,13 +98,13 @@ public class RuudukkoUI implements Runnable {
 
     public void MuutaLabelit(ArrayList<String> tekstit) {
         ArrayList<String> muutettavat = new ArrayList<String>();
-        for (int i = rivienMaara; i >= 0; i--) {
+        for (int i = rivienMaara - 3; i >= 0; i--) {
             JLabel lbl = lblLista.get(i);
             String muut = lbl.getText();
             muutettavat.add(muut);
         }
         int i = tekstit.size() - 1;
-        int h = rivienMaara;
+        int h = rivienMaara - 3;
         while (i >= 0 && h >= 0) {
             String s = tekstit.get(i);
             JLabel lbl = lblLista.get(h);
@@ -278,30 +286,103 @@ public class RuudukkoUI implements Runnable {
         Pelaaja p = this.liikkuminen.getPelaaja();
         if (p.getExperience() > 99) {
             p.growExperience(-100);
-            Object[] vaihtoEhdot = {
-                "Health + 5",
-                "Health Refill",
-                "Attack Power + 2"
+            String[] vaihtoEhdot = {
+                "<html>Health + 5<br />(Delete or 1)</html>",
+                "<html>Health Refill<br />(End or 2)</html>",
+                "<html>Attack Power + 2<br />(Page Down or 3)</html>"
             };
-            int reply = JOptionPane.showOptionDialog(f, "Level up! You can choose from 3 options:", "lvlup", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, vaihtoEhdot, vaihtoEhdot[0]);
-            int hp = p.getHitPoints();
-            int hpMax = p.getHitPointsMax();
-            if (reply == 0) {
-                hpMax += 5;
-                hp += 5;
-                p.setHitPoints(hp);
-                p.setHitPointsMax(hpMax);
-            } else if (reply == 1) {
-                hp = hpMax;
-                p.setHitPoints(hp);
-            } else {
-                int ap = p.getAttackPower();
-                p.setAttackPower(ap + 2);
+            JDialog dia = new JDialog(f, "lvlup", true);
+            dia.setLocationRelativeTo(null);
+            JPanel pan = new JPanel(new GridBagLayout());
+            JLabel uusi = new JLabel("Level up! You can choose from 3 options:");
+            Font font = new Font("Terminus", Font.PLAIN, 16);
+            uusi.setFont(font);
+            uusi.setHorizontalAlignment(JLabel.CENTER);
+            pan.setPreferredSize(new Dimension(400, 150));
+            dia.setResizable(false);
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridx = 0;
+            c.gridy = 1;
+            c.weighty = 1;
+            c.gridwidth = 3;
+            pan.add(uusi, c);
+            JButton eka = new JButton();
+            eka.setText(vaihtoEhdot[0]);
+            eka.setFocusable(false);
+            eka.setEnabled(true);
+            eka.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "hpUp");
+            eka.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_1, 0), "hpUp");
+            eka.getActionMap().put("hpUp", new AbstractAction("hpUp") {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    e.getActionCommand().equals("hpUp");
+                    p.setHitPoints(p.getHitPoints() + 5);
+                    p.setHitPointsMax(p.getHitPointsMax() + 5);
+                    dia.dispose();
+                }
+            });
+            JButton toka = new JButton();
+            toka.setText(vaihtoEhdot[1]);
+            toka.setFocusable(false);
+            toka.setEnabled(true);
+            toka.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0), "hpFill");
+            toka.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_2, 0), "hpFill");
+            toka.getActionMap().put("hpFill",  new AbstractAction("hpFill") {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    p.setHitPoints(p.getHitPointsMax());
+                    dia.dispose();
+                }
+            });
+            JButton kolm = new JButton();
+            kolm.setText(vaihtoEhdot[2]);
+            kolm.setFocusable(false);
+            kolm.setEnabled(true);
+            kolm.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0), "apUP");
+            kolm.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0), "apUP");
+            kolm.getActionMap().put("apUP",  new AbstractAction("apUP") {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    p.setAttackPower(p.getAttackPower() + 2);
+                    dia.dispose();
+                }
+            });
+            for (int j = 0; j < 3; j += 2) {
+                for (int i = 0; i < 3; i++) {
+                    GridBagConstraints co = new GridBagConstraints();
+                    co.gridx = i;
+                    co.gridy = j;
+                    co.weighty = 0;
+                    pan.add(new JLabel(" "), co);
+                }
             }
+            Insets uudet = new Insets(2, 2, 2, 2);
+            GridBagConstraints co = new GridBagConstraints();
+            co.gridx = 0;
+            co.gridy = 3;
+            co.weighty = 0.5;
+            co.insets = uudet;
+            GridBagConstraints con = new GridBagConstraints();
+            con.gridx = 1;
+            con.gridy = 3;
+            con.weighty = 0.5;
+            con.insets = uudet;
+            GridBagConstraints cons = new GridBagConstraints();
+            cons.gridx = 2;
+            cons.gridy = 3;
+            cons.weighty = 0.5;
+            cons.insets = uudet;
+            pan.add(eka, co);
+            pan.add(toka, con);
+            pan.add(kolm, cons);
+            dia.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dia.add(pan);
+            dia.pack();
+            dia.setVisible(true);
             this.paivita(new ArrayList<String>());
         }
     }
-
+    
     @Override
     public void run() {
         //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

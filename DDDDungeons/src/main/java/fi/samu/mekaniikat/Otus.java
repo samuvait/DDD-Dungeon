@@ -42,7 +42,7 @@ public class Otus {
         taisteleeko = 0;
         piirretaanko = 0;
         this.tyyppi = tyyppi;
-        this.xpBonus = tyyppi * 3;
+        this.xpBonus = tyyppi * 4;
         if (tyyppi == 0) {
             luoOtus(5, 2, "rat", "  r  ");
         } else if (tyyppi == 1) {
