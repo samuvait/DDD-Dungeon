@@ -11,8 +11,9 @@ Pelissä on tarkoitus päihittää hirviötä ja edetä alemmas ja alemmas luola
 
 [Tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
 
-### Raportit
-[pit-raportti](https://htmlpreview.github.io/?https://github.com/samuvait/DDD-Dungeon/blob/master/dokumentaatio/201702242346/index.html
-)
+[Javadoc](https://htmlpreview.github.io/?https://github.com/samuvait/DDD-Dungeon/blob/master/javadoc/index.html)
 
-[checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/samuvait/DDD-Dungeon/blob/master/dokumentaatio/checkstyle/checkstyle.html)
+### Raportit
+[pit-raportti](https://htmlpreview.github.io/?https://github.com/samuvait/DDD-Dungeon/blob/master/dokumentaatio/pit-raportti/201703052122/index.html)
+
+[checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/samuvait/DDD-Dungeon/blob/master/dokumentaatio/checkstyle-raportti/checkstyle.html)
