@@ -18,7 +18,13 @@ Peli sisältää generaattorin joka luo uuden kerroksen aina kun pelaaja menee a
 
 
 ### Rakennekuvaus:
-LuolaGeneraattori luo luolan kerroksen Kaytavat ja Huoneet luokkien avulla. Liikkuminen aloittaa liikkumisen ja luo jokaiselle kerrokselle uudet Taisteleminen ja Viholliset luokat, jotka hoitavat vihollisten luonnin, sekä taistelemisen pelaajan ja vihollisten välillä. RuudukkoUI näyttää pelin kartan ja päivittää sitä pelaajan siirtojen mukaisesti, joita Kuuntelija kuuntelee.
+Main metodi aloittaa graafisen käyttöliittymän toiminnan RuudukkoUI luokan avulla. RuudukkoUI luo LuolaGeneraattorin, joka luo luolan kerroksen Kaytavat ja Huoneet luokkien avulla. Huoneet luokka luo huoneet ja sijoittaa ne kartalle, jonka LuolaGeneraattori on luonut. Huoneet on kuvattu Huone luokan avulla, joka sisältää niiden tärkeimmät tiedot. Kaytavat luokka sijoittaa käytävät luotujen huoneiden välille.
+
+RuudukkoUI luo sen jälkeen Liikkuminen luokan, joka aloittaa liikkumisen ja luo jokaiselle kerrokselle uudet Taisteleminen ja Viholliset luokat, jotka hoitavat vihollisten luonnin, sekä taistelemisen pelaajan ja vihollisten välillä. Viholliset luokka luo Otus luokan olioita, jotka sijoitetaan kartalle. Liikkuminen luokka käyttää Pelaaja luokka kuvaamaan pelaajaa ja se käyttää Koordinaatteja pelaajan sijainnin kuvaamiseen kartalla. Taisteleminen tarkastaa voiko Otus luokan oliot hyökätä pelajaan ja hyökkääkö pelaaja siirrollaan otuksiin.
+
+RuudukkoUI näyttää pelin kartan ja päivittää sitä pelaajan siirtojen mukaisesti, joita Kuuntelija kuuntelee. RuudukkoUI myös pitää kirjaa pelaajan edistymisestä ja näyttää viestejä, esim. jos pelaaja kuolee tai voittaa pelin.
+
+
 
 #### Luokkakaavio
 
