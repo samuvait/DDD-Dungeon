@@ -12,4 +12,5 @@ Päivä | Tunnit | Kuvaus
 23.02.2017 | 1.5h | Testauksen parantelu
 24.02.2017 | 3h | Lisaa luokkia ja testausta
 01.03.2017 | 2h | Vihollisia ja loppu lisatty
-... | ... | ...
+05.03.2017 | 3h | Loppupalautus
+Yhteensä | 45h | Projekti
