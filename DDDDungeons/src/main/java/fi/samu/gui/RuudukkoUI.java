@@ -241,7 +241,7 @@ public class RuudukkoUI implements Runnable {
             }
         }
     }
-    
+
     private void pelinLoppu() {
         Object[] vaihtoEhdot = {
             "Restart",
@@ -292,7 +292,6 @@ public class RuudukkoUI implements Runnable {
                 "<html>Attack Power + 2<br />(Page Down or 3)</html>"
             };
             JDialog dia = new JDialog(f, "lvlup", true);
-            dia.setLocationRelativeTo(null);
             JPanel pan = new JPanel(new GridBagLayout());
             JLabel uusi = new JLabel("Level up! You can choose from 3 options:");
             Font font = new Font("Terminus", Font.PLAIN, 16);
@@ -315,7 +314,14 @@ public class RuudukkoUI implements Runnable {
             eka.getActionMap().put("hpUp", new AbstractAction("hpUp") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    e.getActionCommand().equals("hpUp");
+                    p.setHitPoints(p.getHitPoints() + 5);
+                    p.setHitPointsMax(p.getHitPointsMax() + 5);
+                    dia.dispose();
+                }
+            });
+            eka.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     p.setHitPoints(p.getHitPoints() + 5);
                     p.setHitPointsMax(p.getHitPointsMax() + 5);
                     dia.dispose();
@@ -327,7 +333,14 @@ public class RuudukkoUI implements Runnable {
             toka.setEnabled(true);
             toka.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0), "hpFill");
             toka.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_2, 0), "hpFill");
-            toka.getActionMap().put("hpFill",  new AbstractAction("hpFill") {
+            toka.getActionMap().put("hpFill", new AbstractAction("hpFill") {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    p.setHitPoints(p.getHitPointsMax());
+                    dia.dispose();
+                }
+            });
+            toka.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     p.setHitPoints(p.getHitPointsMax());
@@ -340,7 +353,14 @@ public class RuudukkoUI implements Runnable {
             kolm.setEnabled(true);
             kolm.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0), "apUP");
             kolm.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0), "apUP");
-            kolm.getActionMap().put("apUP",  new AbstractAction("apUP") {
+            kolm.getActionMap().put("apUP", new AbstractAction("apUP") {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    p.setAttackPower(p.getAttackPower() + 2);
+                    dia.dispose();
+                }
+            });
+            kolm.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     p.setAttackPower(p.getAttackPower() + 2);
@@ -378,11 +398,12 @@ public class RuudukkoUI implements Runnable {
             dia.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dia.add(pan);
             dia.pack();
+            dia.setLocationRelativeTo(f);
             dia.setVisible(true);
             this.paivita(new ArrayList<String>());
         }
     }
-    
+
     @Override
     public void run() {
         //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
