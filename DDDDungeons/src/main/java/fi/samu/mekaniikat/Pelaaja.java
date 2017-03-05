@@ -49,10 +49,11 @@ public class Pelaaja {
     public void setExperience(int exp) {
         this.experience = exp;
     }
-    
+
     public void setHitPointsMax(int hp) {
         this.hpMax = hp;
     }
+
     /**
      * Kasvattaa pelaajan kokemuksen määrää, kun tämä päihittää hirviöitä.
      *
@@ -69,7 +70,7 @@ public class Pelaaja {
     public int getHitPoints() {
         return this.hpCur;
     }
-    
+
     public int getHitPointsMax() {
         return this.hpMax;
     }

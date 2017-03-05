@@ -98,6 +98,20 @@ public class Liikkuminen {
         return tekstit;
     }
 
+    /**
+     * Tarkistaa voiko pelaaja liikkua haluttuun suuntaan vai taisteleeko, ja
+     * laskee sen perusteella koordinaatin.
+     *
+     * @param muuttumaton Koordinaatti, jota ei muutettaisi pelaajan liikkeen
+     * aikana.
+     * @param koordinaatti Koordinaatti, jota voidaan muuttaa pelajaan liikkeen
+     * aikana.
+     * @param onY Onko muutettava koordinaatti y-koordinaatti.
+     * @param muutos Muutos, jolla koordinaattia muutetaan.
+     * @param tekstit Combat logiin lisättävien tekstien lista.
+     * @return Palauttaa muutetun koordinaatin arvon jos pelaaja pystyi
+     * liikkumaan.
+     */
     public int tarkistaLiike(int muuttumaton, int koordinaatti, boolean onY, int muutos, ArrayList<String> tekstit) {
         int x = 0;
         int y = 0;

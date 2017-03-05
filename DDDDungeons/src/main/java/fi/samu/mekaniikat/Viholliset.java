@@ -37,6 +37,7 @@ public class Viholliset {
         this.kerros = kerros;
         this.sijoitetutHuoneet = new ArrayList(sijoitetutHuoneet);
         this.koko = koko;
+        viholliset = new ArrayList();
     }
 
     /**

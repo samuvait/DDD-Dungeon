@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * @author Samu
  */
 public class Kuuntelija implements KeyListener {
-    
+
     private Liikkuminen liikkuminen;
     private RuudukkoUI gui;
-    
+
     public Kuuntelija(Liikkuminen liikkuminen, RuudukkoUI gui) {
         this.liikkuminen = liikkuminen;
         this.gui = gui;
@@ -21,7 +21,7 @@ public class Kuuntelija implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     @Override
@@ -38,14 +38,14 @@ public class Kuuntelija implements KeyListener {
         }
         gui.paivita(tekstit);
     }
-    
+
     public void setLiikkuminen(Liikkuminen l) {
         this.liikkuminen = l;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
+
     }
-    
+
 }
