@@ -30,9 +30,14 @@ public class RuudukkoUI implements Runnable {
     private Kuuntelija k;
     private JPanel combatLog;
     private ArrayList<JLabel> lblLista;
-    private int dmn;
-    private int rivienMaara = 45;
+    private int dmn; // Desktop 30, Laptop 28
+    private int rivienMaara = 45; // Desktop 45, Laptop 42
     private int nykyinenKerros;
+    private Font boldKasi;
+    private Font plainKasi;
+    private Font plainKuus;
+    private Font kerrosFont;
+    private int border;
 
     public RuudukkoUI(int sivunPituus) {
         lg = new LuolaGeneraattori(sivunPituus);
@@ -40,10 +45,32 @@ public class RuudukkoUI implements Runnable {
         viholliset = liikkuminen.getViholliset();
         kartta = lg.getKartta();
         this.sivunPituus = sivunPituus;
-        this.dmn = 30;
+        this.dmn = 30; // Desktop 30, Laptop 27
         nykyinenKerros = liikkuminen.getKerros() - 1;
+        this.boldKasi = new Font("Terminus", Font.BOLD, 8);
+        this.plainKasi = new Font("Terminus", Font.PLAIN, 8);
+        this.plainKuus = new Font("Terminus", Font.PLAIN, 6);
+        this.kerrosFont = new Font("Terminus", Font.PLAIN, 10);
+        this.border = -2;
     }
-
+    
+    public void deskvailap() {
+        Object[] vaihtoEhdot = {
+            "Desktop",
+            "Laptop"
+        };
+        Pelaaja p = this.liikkuminen.getPelaaja();
+            int reply = JOptionPane.showOptionDialog(null, "Are you playing on a desktop or a laptop?", "Question", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, vaihtoEhdot, vaihtoEhdot[0]);
+        if (reply == 0) {
+        } else {
+            this.dmn = 28;
+            this.rivienMaara = 42;
+//            this.boldKasi = new Font("Terminus", Font.BOLD, 8);
+            this.plainKasi = new Font("Terminus", Font.PLAIN, 7);
+            this.kerrosFont = new Font("Terminus", Font.PLAIN, 8);
+        }
+    }
+    
     private JPanel luoRuudukkoBagPaneeli() {
         this.list = new ArrayList();
         JPanel p = new JPanel(new GridBagLayout());
@@ -78,7 +105,9 @@ public class RuudukkoUI implements Runnable {
     }
 
     public void lisaaLabelit() {
-        this.combatLog.removeAll();
+        if (this.combatLog != null) {
+            this.combatLog.removeAll();
+        }
         JLabel otsikko = new JLabel();
         otsikko.setText("Combat Log");
         Font font = new Font("Terminus", Font.BOLD, 12);
@@ -135,26 +164,22 @@ public class RuudukkoUI implements Runnable {
                 pan.removeAll();
                 if (i == 0 && j == 0) {
                     pan.setBackground(Color.gray);
-                    Font font = new Font("Terminus", Font.PLAIN, 8);
                     JLabel lbl = new JLabel("Floor");
-                    lbl.setFont(font);
-                    lbl.setBorder(BorderFactory.createEmptyBorder(-2 /*top*/, 0, 0, 0));
+                    lbl.setFont(plainKasi);
+                    lbl.setBorder(BorderFactory.createEmptyBorder(this.border /*top*/, 0, 0, 0));
                     JLabel krs = new JLabel(kerros);
                     krs.setVerticalTextPosition(JLabel.BOTTOM);
-                    Font f = new Font("Terminus", Font.PLAIN, 10);
-                    krs.setFont(f);
+                    krs.setFont(this.kerrosFont);
                     pan.add(lbl);
                     pan.add(krs);
                 } else if (kartta[j][i] == 0) {
                     pan.setBackground(Color.black);
                 } else {
-                    Font font = new Font("Terminus", Font.BOLD, 8);
-                    Font hpFont = new Font("Terminus", Font.PLAIN, 8);
                     Pelaaja p = this.liikkuminen.getPelaaja();
                     if (i == p.getKoordinaatit().getX() && j == p.getKoordinaatit().getY()) {
                         JLabel lbl = new JLabel("@");
-                        lbl.setFont(font);
-                        lbl.setBorder(BorderFactory.createEmptyBorder(-2 /*top*/, 0, 0, 0));
+                        lbl.setFont(boldKasi);
+                        lbl.setBorder(BorderFactory.createEmptyBorder(this.border /*top*/, 0, 0, 0));
                         if (this.nykyinenKerros < uusiKerros) {
                             pan.setBackground(Color.YELLOW);
                             this.nykyinenKerros = uusiKerros;
@@ -162,20 +187,21 @@ public class RuudukkoUI implements Runnable {
                             pan.setBackground(Color.white);
                         }
                         JLabel hp = new JLabel(p.getHitPoints() + "/" + p.getHitPointsMax());
-                        hp.setFont(hpFont);
+                        hp.setFont(plainKasi);
                         hp.setVerticalTextPosition(JLabel.BOTTOM);
                         pan.add(lbl);
                         pan.add(hp);
                     } else if (this.viholliset.tarkistaOtukset(i, j)) {
+                        Font hpFont = plainKasi;
                         pan.setBackground(Color.white);
                         Otus o = this.viholliset.palautaPiirrettava(i, j);
                         JLabel lbl = new JLabel(o.getTunnus());
-                        lbl.setFont(font);
+                        lbl.setFont(boldKasi);
                         if (o.getTunnus().equals(" D ")) {
                             lbl.setForeground(Color.RED);
-                            hpFont = new Font("Terminus", Font.PLAIN, 6);
+                            hpFont = plainKuus;
                         }
-                        lbl.setBorder(BorderFactory.createEmptyBorder(-2 /*top*/, 0, 0, 0));
+                        lbl.setBorder(BorderFactory.createEmptyBorder(this.border /*top*/, 0, 0, 0));
                         JLabel hp = new JLabel(o.getHitPoints() + "/" + o.getHitPointsMax());
                         hp.setFont(hpFont);
                         hp.setVerticalAlignment(JLabel.BOTTOM);
@@ -204,6 +230,7 @@ public class RuudukkoUI implements Runnable {
     }
 
     public void nayta() {
+        this.deskvailap();
         f = new JFrame("DDD-Dungeon");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(luoRuudukkoBagPaneeli());
@@ -277,8 +304,10 @@ public class RuudukkoUI implements Runnable {
     }
 
     public void tyhjennaLogi() {
-        for (JLabel lbl : this.lblLista) {
-            lbl.setText("");
+        if (this.lblLista != null) {
+            for (JLabel lbl : this.lblLista) {
+                lbl.setText(" ");
+            }
         }
     }
 

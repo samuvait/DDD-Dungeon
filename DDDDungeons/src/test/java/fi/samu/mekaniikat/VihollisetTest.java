@@ -68,15 +68,38 @@ public class VihollisetTest {
 
     @Test
     public void liikuttaaOikein() {
-        Taisteleminen taisto = new Taisteleminen(viholliset.getVihollisLista(), kartta);
-        viholliset.setTaistelu(taisto);
-        Pelaaja pelaaja = new Pelaaja(30, 30);
-        Otus o = viholliset.getVihollisLista().get(0);
-        int x = o.getKoordinaatit().getX();
-        int y = o.getKoordinaatit().getY();
-        o.setLiikkuuko(1);
-        viholliset.liikuta(pelaaja);
-        assertTrue(!viholliset.tarkistaOtukset(x, y));
+        boolean oliko = true;
+        for (int i = 0; i < 100; i++) {
+            LuolaGeneraattori lg = new LuolaGeneraattori();
+            lg.alustaKartta(25);
+            int[][] kartta = lg.getKartta();
+            kartta[4][4] = 1;
+            kartta[4][5] = 1;
+            ArrayList<Huone> shuo = new ArrayList();
+            shuo.add(new Huone(4, 4, 3));
+            Viholliset viholliset = new Viholliset(25, 1, shuo, kartta);
+            viholliset.getVihollisLista().clear();
+            Otus o = new Otus(4, 4, 0);
+            ArrayList<Otus> lista = viholliset.getVihollisLista();
+            lista.add(o);
+            kartta[4][4] = 1;
+            kartta[5][4] = 1;
+            kartta [4][5] = 1;
+            kartta[4][3] = 1;
+            kartta[3][4] = 1;
+            Taisteleminen taisto = new Taisteleminen(lista, kartta);
+            viholliset.setTaistelu(taisto);
+            Pelaaja pelaaja = new Pelaaja(30, 30);
+            int x = 4;
+            int y = 4;
+            o.setLiikkuuko(1);
+            viholliset.liikuta(pelaaja);
+            o = viholliset.getVihollisLista().get(0);
+            if(viholliset.tarkistaOtukset(4, 4)) {
+                oliko = false;
+            }
+        }
+        assertTrue(oliko);
     }
 
     @Test
